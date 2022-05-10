@@ -1,9 +1,7 @@
 function Footer() {
   return (
     <>
-      <footer id="footer">
-        <h1>The footer goes here!</h1>
-      </footer>
+      <h1>This is the footer</h1>
     </>
   );
 }

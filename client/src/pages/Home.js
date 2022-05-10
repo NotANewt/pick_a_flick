@@ -1,11 +1,7 @@
-import LoginForm from "../components/LoginForm";
-import SignupForm from "../components/SignupForm";
-
 function Home(props) {
   return (
     <>
-      <LoginForm></LoginForm>
-      <SignupForm></SignupForm>
+      <h1>This is the Home Page</h1>
     </>
   );
 }
