@@ -18,13 +18,15 @@ const AppNavbar = () => {
           <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar">
             <Nav className="ml-auto">
-              {/* if user is logged in show logout */}
+              {/* if user is logged in show profile and logout */}
               {Auth.loggedIn() ? (
                 <>
+                  <Nav.Link to="/Profile">Profile</Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
-                <Link to="/LoginSignup">Login/Sign Up</Link>
+                // otherwise, show login/signup
+                <Nav.Link to="/LoginSignup">Login/Sign Up</Nav.Link>
               )}
             </Nav>
           </Navbar.Collapse>
