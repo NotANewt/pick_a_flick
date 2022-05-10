@@ -1,21 +1,18 @@
-const { Schema } = require("mongoose");
+const { Schema, model } = require("mongoose");
+const bcrypt = require("bcrypt");
 
-// This is a subdocument schema, it won't become its own model but we'll use it as the schema for the User's `savedBooks` array in User.js
 const dealbreakerSchema = new Schema({
-  // Does The Dog Die question
-  does_name: [
-    {
-      type: String,
-    },
-  ],
-  //   More yes than no votes
+  question: {
+    type: String,
+  },
   name: {
     type: String,
   },
-  // More no than yes votes
   not_name: {
     type: String,
   },
 });
 
-module.exports = dealbreakerSchema;
+const Dealbreaker = model("Dealbreaker", dealbreakerSchema);
+
+module.exports = Dealbreaker;

@@ -1,3 +1,4 @@
 const User = require("./User");
+const Dealbreaker = require("./Dealbreaker");
 
-module.exports = { User };
+module.exports = { User, Dealbreaker };

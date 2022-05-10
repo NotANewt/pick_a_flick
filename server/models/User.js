@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 
 // import schema from Dealbreaker.js
-const dealbreakerSchema = require("./Dealbreaker");
+const brokenDealSchema = require("./BrokenDeal");
 
 const userSchema = new Schema({
   username: {
@@ -20,7 +20,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  dealbreakers: [dealbreakerSchema],
+  dealbreakers: [brokenDealSchema],
 });
 
 // hash user password

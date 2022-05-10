@@ -1,0 +1,492 @@
+[
+  {
+    "does_name": "Does a cat die",
+    "name": "a cat dies",
+    "not_name": "no cats die"
+  },
+  {
+    "does_name": "Does the dog die",
+    "name": "a dog dies",
+    "not_name": "no dogs die"
+  },
+  {
+    "does_name": "Are animals abused",
+    "name": "animals are abused",
+    "not_name": "no animals are abused"
+  },
+  {
+    "does_name": "Are there bugs",
+    "name": "there are bugs",
+    "not_name": "no bugs"
+  },
+  {
+    "does_name": "Is there dog fighting",
+    "name": "there's dog fighting",
+    "not_name": "no dog fighting"
+  },
+  {
+    "does_name": "Does an animal die",
+    "name": "an animal dies",
+    "not_name": "no animals die"
+  },
+  {
+    "does_name": "Is there a dead animal",
+    "name": "there's a dead animal",
+    "not_name": "there are no dead animals"
+  },
+  {
+    "does_name": "Does a horse die",
+    "name": "a horse dies",
+    "not_name": "no horses die"
+  },
+  {
+    "does_name": "Are there snakes",
+    "name": "there are snakes",
+    "not_name": "no snakes"
+  },
+  {
+    "does_name": "Are there spiders",
+    "name": "there are spiders",
+    "not_name": "no spiders"
+  },
+  {
+    "does_name": "Does a dragon die",
+    "name": "a dragon dies",
+    "not_name": "no dragons die"
+  },
+  {
+    "does_name": "Is someone stalked",
+    "name": "someone is stalked",
+    "not_name": "no one is stalked"
+  },
+  {
+    "does_name": "Is someone gaslighted",
+    "name": "someone gets gaslighted",
+    "not_name": "no one gets gaslighted"
+  },
+  {
+    "does_name": "Is there domestic violence",
+    "name": "there's domestic violence",
+    "not_name": "no domestic violence"
+  },
+  {
+    "does_name": "Is a child abused",
+    "name": "there's child abuse",
+    "not_name": "no child is abused"
+  },
+  {
+    "does_name": "Is there addiction",
+    "name": "there's addiction",
+    "not_name": "no addiction"
+  },
+  {
+    "does_name": "Does someone use drugs",
+    "name": "someone uses drugs",
+    "not_name": "no one uses drugs"
+  },
+  {
+    "does_name": "Does someone abuse alcohol",
+    "name": "alcohol abuse",
+    "not_name": "no one abuses alcohol"
+  },
+  {
+    "does_name": "Is someone tortured",
+    "name": "there's torture",
+    "not_name": "no torture"
+  },
+  {
+    "does_name": "Is there excessive gore",
+    "name": "there's excessive gore",
+    "not_name": "there's no excessive gore"
+  },
+  {
+    "does_name": "Is there shaving/cutting",
+    "name": "there's shaving/cutting",
+    "not_name": "no shaving/cutting"
+  },
+  {
+    "does_name": "Are any teeth damaged",
+    "name": "teeth are damaged",
+    "not_name": "no teeth are damaged"
+  },
+  {
+    "does_name": "Is there genital trauma/mutilation",
+    "name": "there's genital trauma/mutilation",
+    "not_name": "there's no genital trauma/mutilation"
+  },
+  {
+    "does_name": "Is someone burned alive",
+    "name": "someone is burned alive",
+    "not_name": "no one is burned alive"
+  },
+  {
+    "does_name": "Is there cannibalism",
+    "name": "there's cannibalism",
+    "not_name": "no cannibalism"
+  },
+  {
+    "does_name": "Does a head get squashed",
+    "name": "heads get squashed",
+    "not_name": "no heads get squashed"
+  },
+  {
+    "does_name": "Is someone buried alive",
+    "name": "someone is buried alive",
+    "not_name": "no one is buried alive"
+  },
+  {
+    "does_name": "Is there amputation",
+    "name": "there's amputation",
+    "not_name": "there's no amputation"
+  },
+  {
+    "does_name": "Is there finger/toe mutilation",
+    "name": "there's finger/toe mutilation",
+    "not_name": "no finger/toe mutilation"
+  },
+  {
+    "does_name": "Is there a hanging",
+    "name": "there are hangings",
+    "not_name": "there are no hangings"
+  },
+  {
+    "does_name": "Does someone struggle to breathe",
+    "name": "someone struggles to breathe",
+    "not_name": "no one struggles to breathe"
+  },
+  {
+    "does_name": "Does someone have a seizure",
+    "name": "somone has a seizure",
+    "not_name": "no one has a seizure"
+  },
+  {
+    "does_name": "Is there eye mutilation",
+    "name": "there's eye mutilation",
+    "not_name": "no eye mutiliation"
+  },
+  {
+    "does_name": "Does someone break a bone",
+    "name": "someone breaks a bone",
+    "not_name": "no bones break"
+  },
+  {
+    "does_name": "Does someone fall to their death",
+    "name": "someone falls to their death",
+    "not_name": "no one falls to their death"
+  },
+  {
+    "does_name": "Does a kid die",
+    "name": "a kid dies",
+    "not_name": "no kids die"
+  },
+  {
+    "does_name": "Does someone cheat",
+    "name": "someone cheats",
+    "not_name": "no one cheats"
+  },
+  {
+    "does_name": "Is someone kidnapped",
+    "name": "someone is kidnapped",
+    "not_name": "no one is kidnapped"
+  },
+  {
+    "does_name": "Is a child's toy destroyed",
+    "name": "A child's dear toy is destroyed",
+    "not_name": "No dear toys are destroyed"
+  },
+  {
+    "does_name": "Does a parent die",
+    "name": "a parent dies",
+    "not_name": "the parents live"
+  },
+  {
+    "does_name": "Are there jumpscares",
+    "name": "there are jumpscares",
+    "not_name": "there are no jumpscares"
+  },
+  {
+    "does_name": "Are there clowns",
+    "name": "there are clowns",
+    "not_name": "no clowns"
+  },
+  {
+    "does_name": "Are there ghosts",
+    "name": "there's ghosts",
+    "not_name": "no ghosts"
+  },
+  {
+    "does_name": "Is there a shower scene",
+    "name": "there are shower scenes",
+    "not_name": "no shower scenes"
+  },
+  {
+    "does_name": "Is someone possessed",
+    "name": "someone is possessed",
+    "not_name": "no one is possessed"
+  },
+  {
+    "does_name": "Does someone wet/soil themselves",
+    "name": "someone wets/soils themselves",
+    "not_name": "no one wets/soils themselves"
+  },
+  {
+    "does_name": "Is there audio gore",
+    "name": "There's audio gore",
+    "not_name": "no audio gore"
+  },
+  {
+    "does_name": "Does someone fart or spit",
+    "name": "there's farting or spitting",
+    "not_name": "no farting or spitting"
+  },
+  {
+    "does_name": "Does someone vomit",
+    "name": "someone vomits",
+    "not_name": "on vomiting"
+  },
+  {
+    "does_name": "Is there copaganda",
+    "name": "there is copaganda",
+    "not_name": "there's no copaganda"
+  },
+  {
+    "does_name": "Is there a hospital scene",
+    "name": "there's a hospital scene",
+    "not_name": "no hospitals"
+  },
+  {
+    "does_name": "Is electro-therapy used",
+    "name": "electro-therapy is used",
+    "not_name": "electro-therapy is not used"
+  },
+  {
+    "does_name": "Are needles/syringes used",
+    "name": "needles/syringes are used",
+    "not_name": "no needls/syringes"
+  },
+  {
+    "does_name": "Is there a mental institution scene",
+    "name": "there's a mental institution scene",
+    "not_name": "no mental institution scenes"
+  },
+  {
+    "does_name": "Does someone have cancer",
+    "name": "someone has cancer",
+    "not_name": "no one has cancer"
+  },
+  {
+    "does_name": "Are there anxiety attacks",
+    "name": "someone has an anxiety attack",
+    "not_name": "no anxiety attacks"
+  },
+  {
+    "does_name": "Does someone self harm",
+    "name": "someone self harms",
+    "not_name": "no self harm"
+  },
+  {
+    "does_name": "Does someone say \"I'll kill myself\"",
+    "name": "someone says \"I'll kill myself\"",
+    "not_name": "No one says \"I'll kill myself\""
+  },
+  {
+    "does_name": "Does someone suffer from PTSD",
+    "name": "someone suffers from PTSD",
+    "not_name": "no one suffers from PTSD"
+  },
+  {
+    "does_name": "Is a mentally ill person violent",
+    "name": "a mentally ill person is violent",
+    "not_name": "no mentally ill people are violent"
+  },
+  {
+    "does_name": "Is there body dysmorphia",
+    "name": "there's body dysmorphia",
+    "not_name": "no body dysmorphia"
+  },
+  {
+    "does_name": "Is there a claustrophobic scene",
+    "name": "there's a claustrophobic scene",
+    "not_name": "no claustrophobic scenes"
+  },
+  {
+    "does_name": "Is there autism specific abuse",
+    "name": "Autism specific abuse",
+    "not_name": "there's no autism specific abuse"
+  },
+  {
+    "does_name": "Does someone die by suicide",
+    "name": "someone dies by suicide",
+    "not_name": "no one dies by suicide"
+  },
+  {
+    "does_name": "Does someone have an eating disorder",
+    "name": "someone has an eating disorder",
+    "not_name": "no one has an eating disorder"
+  },
+  {
+    "does_name": "Is there misophonia",
+    "name": "there's misophonia",
+    "not_name": "there's no misophonia"
+  },
+  {
+    "does_name": "Are there flashing lights or images",
+    "name": "there's flashing lights or images",
+    "not_name": "no flashing lights or images"
+  },
+  {
+    "does_name": "Is there shakey cam",
+    "name": "shaky cam is used",
+    "not_name": "no shaky cam"
+  },
+  {
+    "does_name": "Does a baby cry",
+    "name": "a baby cries",
+    "not_name": "no babies cry"
+  },
+  {
+    "does_name": "Is the fourth wall broken",
+    "name": "the fourth wall is broken",
+    "not_name": "the fourth wall is not broken"
+  },
+  {
+    "does_name": "Does someone miscarry",
+    "name": "someone miscarries",
+    "not_name": "no miscarriages"
+  },
+  {
+    "does_name": "Is a baby stillborn",
+    "name": "a baby is stillborn",
+    "not_name": "no babies are stillborn"
+  },
+  {
+    "does_name": "Does a pregnant woman die",
+    "name": "a pregnant woman dies",
+    "not_name": "no pregnant women die"
+  },
+  {
+    "does_name": "Are there abortions",
+    "name": "someone has an abortion",
+    "not_name": "no abortions"
+  },
+  {
+    "does_name": "Is there childbirth",
+    "name": "there's childbirth",
+    "not_name": "there's no childbirth"
+  },
+  {
+    "does_name": "Are there babies or unborn children",
+    "name": "there is a baby or unborn child",
+    "not_name": "no babies or unborn children"
+  },
+  {
+    "does_name": "Are there n-words",
+    "name": "someone says the n-word",
+    "not_name": "no n-words"
+  },
+  {
+    "does_name": "Is someone misgendered",
+    "name": "someone is misgendered",
+    "not_name": "no one is misgendered"
+  },
+  {
+    "does_name": "Is there hate speech",
+    "name": "someone speaks hate speech",
+    "not_name": "no hate speech"
+  },
+  {
+    "does_name": "Does an LGBT person die",
+    "name": "an LGBT person dies",
+    "not_name": "all LGBT people live"
+  },
+  {
+    "does_name": "Are there fat jokes",
+    "name": "there's fat jokes",
+    "not_name": "there are no fat jokes"
+  },
+  {
+    "does_name": "Is there ableist language or behavior",
+    "name": "there's ableist language or behavior",
+    "not_name": "there's no ableist language or behavior"
+  },
+  {
+    "does_name": "Are there \"Man in a dress\" jokes",
+    "name": "there are \"Man in a dress\" jokes",
+    "not_name": "there are no \"Man in a dress\" jokes"
+  },
+  {
+    "does_name": "Are there homophobic slurs",
+    "name": "there are homophobic slurs",
+    "not_name": "there are no homophobic slurs"
+  },
+  {
+    "does_name": "Is there antisemitism",
+    "name": "there's antisemitism",
+    "not_name": "no antisemitism"
+  },
+  {
+    "does_name": "Does the black guy die first",
+    "name": "the black guy dies first",
+    "not_name": "a black guy does not die first"
+  },
+  {
+    "does_name": "Is there sexual content",
+    "name": "there is sexual content",
+    "not_name": "no sexual content"
+  },
+  {
+    "does_name": "Are there incestuous relationships",
+    "name": "there are incestuous relationships",
+    "not_name": "there are no incestuous relationships"
+  },
+  {
+    "does_name": "Is someone sexually assaulted",
+    "name": "someone is sexually assaulted",
+    "not_name": "no one is sexually assaulted"
+  },
+  {
+    "does_name": "Does it have a sad ending",
+    "name": "the ending is sad",
+    "not_name": "the end is happy"
+  },
+  {
+    "does_name": "Is Santa (et al) spoiled",
+    "name": "Santa (et al) is spoiled",
+    "not_name": "Santa (et al) are not spoiled"
+  },
+  {
+    "does_name": "Does a car crash",
+    "name": "a car crashes",
+    "not_name": "no cars crash"
+  },
+  {
+    "does_name": "Does a plane crash",
+    "name": "a plane crashes",
+    "not_name": "no plane crashes"
+  },
+  {
+    "does_name": "Is someone hit by a car",
+    "name": "a person is hit by a car",
+    "not_name": "no one is hit by a car"
+  },
+  {
+    "does_name": "Is there gun violence",
+    "name": "there's gun violence",
+    "not_name": "no gun violence"
+  },
+  {
+    "does_name": "Is there blood/gore",
+    "name": "there's blood/gore",
+    "not_name": "no blood/gore"
+  },
+  {
+    "does_name": "Does someone drown",
+    "name": "someone drowns",
+    "not_name": "no drownings"
+  },
+  {
+    "does_name": "Is there a nuclear explosion",
+    "name": "there's a nuclear explosion",
+    "not_name": "no nuclear explosions"
+  }
+]
