@@ -12,8 +12,15 @@ const typeDefs = gql`
     user: User
   }
 
+  type Dealbreaker {
+    question: String
+    name: String
+    not_name: String
+  }
+
   type Query {
     me: User
+    dealbreaker: [Dealbreaker]
   }
 
   type Mutation {

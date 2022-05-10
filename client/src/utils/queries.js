@@ -17,3 +17,11 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_DEALBREAKER = gql`
+  query Dealbreaker {
+    dealbreaker {
+      name
+    }
+  }
+`;
