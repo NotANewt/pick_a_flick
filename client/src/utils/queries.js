@@ -22,6 +22,7 @@ export const QUERY_DEALBREAKER = gql`
   query Dealbreaker {
     dealbreaker {
       name
+      _id
     }
   }
 `;

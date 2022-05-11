@@ -14,6 +14,7 @@ const typeDefs = gql`
   }
 
   type Dealbreaker {
+    _id: ID!
     question: String
     name: String
     not_name: String
