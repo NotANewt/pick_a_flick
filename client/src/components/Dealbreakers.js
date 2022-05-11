@@ -18,21 +18,15 @@ const Dealbreakers = () => {
   }
 
   return (
-    <>
-      <Container>
-        <CardColumns>
-          {dealbreakerData.map((dealbreaker) => {
-            return (
-              <Card key={dealbreaker._id} border="dark">
-                <Card.Body>
-                  <Card.Title>{dealbreaker.name}</Card.Title>
-                </Card.Body>
-              </Card>
-            );
-          })}
-        </CardColumns>
-      </Container>
-    </>
+    <select>
+      {dealbreakerData.map((dealbreaker) => {
+        return (
+          <option key={dealbreaker._id} id={dealbreaker._id}>
+            {dealbreaker.name}
+          </option>
+        );
+      })}
+    </select>
   );
 };
 
