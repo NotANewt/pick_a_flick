@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Jumbotron, Container, CardColumns, Card, Button } from "react-bootstrap";
 
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_DEALBREAKER } from "../utils/queries";
-
-const handleButtonClick = () => {
-  const value = document.getElementById("mySelect").value;
-  console.log(value);
-};
+import { SAVE_USER_DEALBREAKER } from "../utils/mutations";
 
 const Dealbreakers = () => {
+  // set mutation
+  const [saveUserDealbreaker, { error }] = useMutation(SAVE_USER_DEALBREAKER);
+
   // Query database to get all dealbreakers and populate into a dropdown
   const { loading, data } = useQuery(QUERY_DEALBREAKER);
 
@@ -18,6 +17,28 @@ const Dealbreakers = () => {
   if (loading) {
     return <h2>LOADING...</h2>;
   }
+
+  // handle user clicking button to add new dealbreaker
+  const handleButtonClick = () => {
+    const dealbreakerName = document.getElementById("mySelect").value;
+    handleSaveDealbreaker(dealbreakerName);
+  };
+
+  // create function to handle saving a dealbreaker to the database
+  const handleSaveDealbreaker = async (dealbreakerName) => {
+    console.log("starting handleSaveDealbreaker");
+    if (!dealbreakerName) {
+      return false;
+    }
+    const dealbreakerToSave = dealbreakerName;
+    try {
+      const { data } = await saveUserDealbreaker({
+        variables: { dealbreakers: { ...dealbreakerToSave } },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // what is returned
   return (

@@ -23,3 +23,12 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const SAVE_USER_DEALBREAKER = gql`
+  mutation saveUserDealbreaker($_id: String!, $dealbreakers: [String]) {
+    saveUserDealbreaker(id: $_id, dealbreakers: $dealbreakers) {
+      id
+      dealbreakers
+    }
+  }
+`;
