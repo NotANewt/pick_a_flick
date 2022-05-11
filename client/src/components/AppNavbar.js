@@ -21,12 +21,16 @@ const AppNavbar = () => {
               {/* if user is logged in show profile and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link to="/Profile">Profile</Nav.Link>
+                  <Link className="nav-link" to="/Profile">
+                    Profile
+                  </Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
                 // otherwise, show login/signup
-                <Nav.Link to="/LoginSignup">Login/Sign Up</Nav.Link>
+                <Link className="nav-link" to="/LoginSignup">
+                  Login/Sign Up
+                </Link>
               )}
             </Nav>
           </Navbar.Collapse>
