@@ -24,6 +24,12 @@ const AppNavbar = () => {
                   <Link className="nav-link" to="/Profile">
                     Profile
                   </Link>
+                  <Link className="nav-link" to="/Dealbreakers">
+                    Search Dealbreakers
+                  </Link>
+                  <Link className="nav-link" to="/Movies">
+                    Search Movies
+                  </Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (

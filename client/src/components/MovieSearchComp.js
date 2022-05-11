@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from "react-bootstrap";
 
 import { useMutation } from "@apollo/client";
-import { SAVE_MOVIE } from "../utils/mutations";
+// import { SAVE_MOVIE } from "../utils/mutations";
 
 const MovieSearch = () => {
   // create state for holding returned doesthedogdie api data
@@ -116,6 +116,7 @@ const MovieSearch = () => {
                   <p className="small">Release Year: {movie.year}</p>
                   <p className="small">Genre: {movie.genre}</p>
                   <Card.Text>{movie.overview}</Card.Text>
+                  <Button onClick={() => handleSaveMovie(movie.dddId)}>Save This Movie</Button>
                 </Card.Body>
               </Card>
             );
