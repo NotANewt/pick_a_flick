@@ -12,6 +12,7 @@ import LoginSignup from "./pages/LoginSignup";
 import Profile from "./pages/Profile";
 import MovieSearch from "./pages/MovieSearch";
 import DealbreakersSearch from "./pages/DealbreakersSearch";
+import MovieDetails from "./pages/MovieDetails";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -48,6 +49,7 @@ function App() {
             <Route path="/Profile" element={<Profile />} />
             <Route path="/Dealbreakers" element={<DealbreakersSearch />} />
             <Route path="/Movies" element={<MovieSearch />} />
+            <Route path="MovieDetails" element={<MovieDetails />} />
           </Routes>
         </Layout>
       </Router>

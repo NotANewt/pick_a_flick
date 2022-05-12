@@ -38,7 +38,10 @@ const MovieSearch = () => {
         },
       };
 
-      const url = `https://cors-anywhere.herokuapp.com/https://www.doesthedogdie.com/dddsearch?q=${searchInput}`;
+      // TODO: remove this when not working on localhost
+      const corsAnywhere = `https://cors-anywhere.herokuapp.com/`;
+
+      const url = `${corsAnywhere}https://www.doesthedogdie.com/dddsearch?q=${searchInput}`;
 
       console.log(url);
 
