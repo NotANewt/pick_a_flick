@@ -29,19 +29,28 @@ function MovieDetails() {
 
       const url = `${corsAnywhere}https://www.doesthedogdie.com/media/${dddId}`;
 
-      console.log(url);
+      await fetch(url, options)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          //Set the response data if we have movies
 
-      const response = await fetch(url, options);
+          console.log(data);
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
 
-      console.log(response);
+      // console.log(url);
 
-      const { items } = await response.json();
+      // const response = await fetch(url, options);
 
-      console.log(items);
+      // const { items } = await response.json();
 
-      const dealbreakerList = items;
+      // const dealbreakerList = items;
 
-      console.log(dealbreakerList);
+      // console.log(dealbreakerList);
 
       // setSearchedDealbreakers(dealbreakerList);
     } catch (err) {
