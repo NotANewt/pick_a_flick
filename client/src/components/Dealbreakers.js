@@ -24,7 +24,6 @@ const Dealbreakers = () => {
     handleSaveDealbreaker(dealbreakerName);
   };
 
-  // TODO: Fix the PUT request
   // create function to handle saving a dealbreaker to the database
   const handleSaveDealbreaker = async (dealbreakerName) => {
     console.log("starting handleSaveDealbreaker");
