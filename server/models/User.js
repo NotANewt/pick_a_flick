@@ -20,7 +20,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  dealbreakers: [{ name: String }],
+  dealbreakers: [String],
 });
 
 // hash user password

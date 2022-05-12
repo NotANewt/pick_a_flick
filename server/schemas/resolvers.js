@@ -41,8 +41,8 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    saveUserDealbreaker: async (parent, { userId, dealbreaker }) => {
-      await User.findByIdAndUpdate({ _id: userId }, { $push: { dealbreakers: dealbreaker } });
+    saveUserDealbreaker: async (parent, { dealbreaker }, context) => {
+      return await User.findByIdAndUpdate(context.user._id, { $push: { dealbreakers: dealbreaker } });
     },
   },
 };

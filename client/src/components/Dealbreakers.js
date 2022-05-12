@@ -31,10 +31,10 @@ const Dealbreakers = () => {
     if (!dealbreakerName) {
       return false;
     }
-    const dealbreakerToSave = dealbreakerName;
+
     try {
       const { data } = await saveUserDealbreaker({
-        variables: { dealbreakers: { ...dealbreakerToSave } },
+        variables: { dealbreaker: dealbreakerName },
       });
     } catch (err) {
       console.error(err);
