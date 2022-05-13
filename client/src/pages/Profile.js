@@ -1,10 +1,10 @@
-import Dealbreakers from "../components/Dealbreakers";
-import MovieSearch from "../components/MovieSearchComp";
+import { DealbreakerList } from "../components/Dealbreakers";
 
 function Profile(props) {
   return (
     <>
       <h1>This is the Profile Page</h1>
+      <DealbreakerList />
     </>
   );
 }

@@ -42,23 +42,40 @@ const Dealbreaker = (props) => {
   );
 };
 
+const DealbreakerList = (props) => {
+  const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
+
+  const userData = dataMe?.me || {};
+
+  if (loadingMe) {
+    return <h2>LOADING SAVED DEALBREAKERS...</h2>;
+  }
+
+  return (
+    <>
+      <h2>{userData.dealbreakers.length ? `Viewing saved dealbreakers:` : "You have no saved dealbreakers"}</h2>
+      <CardColumns>
+        {userData.dealbreakers?.map((dealbreaker) => {
+          return <Dealbreaker key={dealbreaker} dealbreaker={dealbreaker} />;
+        })}
+      </CardColumns>
+    </>
+  );
+};
+
 const Dealbreakers = () => {
+  const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
   // set mutations
   const [saveUserDealbreaker, { error }] = useMutation(SAVE_USER_DEALBREAKER);
 
   // Query database to get all dealbreakers and populate into a dropdown
-  const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
+
   const { loading, data } = useQuery(QUERY_DEALBREAKER);
 
   const dealbreakerData = data?.dealbreaker || {};
-  const userData = dataMe?.me || {};
 
   if (loading) {
     return <h2>LOADING DROPDOWN...</h2>;
-  }
-
-  if (loadingMe) {
-    return <h2>LOADING SAVED DEALBREAKERS...</h2>;
   }
 
   // handle user clicking button to add new dealbreaker
@@ -107,15 +124,10 @@ const Dealbreakers = () => {
         Add Dealbreaker
       </Button>
       <Container>
-        <h2>{userData.dealbreakers.length ? `Viewing saved dealbreakers:` : "You have no saved dealbreakers"}</h2>
-        <CardColumns>
-          {userData.dealbreakers?.map((dealbreaker) => {
-            return <Dealbreaker key={dealbreaker} dealbreaker={dealbreaker} />;
-          })}
-        </CardColumns>
+        <DealbreakerList />
       </Container>
     </>
   );
 };
 
-export { Dealbreaker, Dealbreakers };
+export { Dealbreaker, Dealbreakers, DealbreakerList };
