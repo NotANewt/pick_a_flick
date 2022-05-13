@@ -6,6 +6,29 @@ const typeDefs = gql`
     username: String!
     email: String
     dealbreakers: [String]
+    movies: [Movie]
+  }
+
+  type Movie {
+    dddId: String
+    movieDbId: String
+    title: String
+    year: String
+    genre: String
+    overview: String
+    posterImage: String
+    dealbreakers: [String]
+  }
+
+  input MovieInput {
+    dddId: String
+    movieDbId: String
+    title: String
+    year: String
+    genre: String
+    overview: String
+    posterImage: String
+    dealbreakers: [String]
   }
 
   type Auth {
@@ -30,6 +53,7 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     saveUserDealbreaker(dealbreaker: String): User
     removeUserDealbreaker(dealbreaker: String): User
+    saveUserMovie(movieData: MovieInput): User
   }
 `;
 

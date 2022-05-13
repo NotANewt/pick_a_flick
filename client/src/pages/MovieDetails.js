@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Jumbotron, Container, Col, Row, Image, Form, Button, Card, CardColumns } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
+import { useMutation } from "@apollo/client";
+import { SAVE_USER_MOVIE } from "../utils/mutations";
+
+import Auth from "../utils/auth";
+
 function MovieDetails() {
+  const [saveUserMovie, { error }] = useMutation(SAVE_USER_MOVIE);
+
   // create state for holding returned doesthedogdie api data
   const [searchedMovieDetails, setSearchedMovieDetails] = useState([]);
   const { dddId } = useParams();
@@ -64,6 +71,24 @@ function MovieDetails() {
     }
   };
 
+  const handleSaveMovie = async (movieData) => {
+    // get token
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      console.log(movieData);
+      const { data } = await saveUserMovie({
+        variables: { movies: movieData },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <Row key={searchedMovieDetails.dddId}>
@@ -85,6 +110,9 @@ function MovieDetails() {
             })}
           </ul>
         </Col>
+        <Button className="btn-block btn-info" onClick={() => handleSaveMovie(searchedMovieDetails)}>
+          Save Movie
+        </Button>
       </Row>
     </>
   );

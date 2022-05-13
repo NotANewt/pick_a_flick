@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema } = require("mongoose");
 
 const movieSchema = new Schema({
   dddId: {
@@ -22,9 +22,7 @@ const movieSchema = new Schema({
   posterImage: {
     type: String,
   },
-  dealbreakers: [{ name: String }],
+  dealbreakers: [String],
 });
 
-const Movie = model("Movie", movieSchema);
-
-module.exports = Movie;
+module.exports = movieSchema;
