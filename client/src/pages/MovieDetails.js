@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 function MovieDetails() {
   // create state for holding returned doesthedogdie api data
-  const [searchedDealbreakers, setSearchedDealbreakers] = useState([]);
+  const [searchedMovieDetails, setSearchedMovieDetails] = useState([]);
+  const { dddId } = useParams();
+  console.log(dddId);
 
   useEffect(() => {
     getDealbreakers();
@@ -21,13 +24,12 @@ function MovieDetails() {
         },
       };
 
-      // TODO: remove this hard coded variable when I get the movie search link set up
-      const dddId = 10752;
-
       // TODO: remove this when not working on localhost
       const corsAnywhere = `https://cors-anywhere.herokuapp.com/`;
 
       const url = `${corsAnywhere}https://www.doesthedogdie.com/media/${dddId}`;
+
+      console.log(url);
 
       await fetch(url, options)
         .then((response) => {
@@ -61,7 +63,7 @@ function MovieDetails() {
   return (
     <>
       <h1>This is the Movie Details page</h1>
-      {searchedDealbreakers}
+      {dddId}
     </>
   );
 }

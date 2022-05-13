@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Switch } from "react-router-dom";
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
@@ -49,7 +49,7 @@ function App() {
             <Route path="/Profile" element={<Profile />} />
             <Route path="/Dealbreakers" element={<DealbreakersSearch />} />
             <Route path="/Movies" element={<MovieSearch />} />
-            <Route path="MovieDetails" element={<MovieDetails />} />
+            <Route path="/Movies/MovieDetails/:dddId" element={<MovieDetails />} />
           </Routes>
         </Layout>
       </Router>
