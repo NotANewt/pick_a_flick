@@ -1,9 +1,6 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 
-// import Dealbreaker model
-const Dealbreaker = require("./Dealbreaker");
-
 const userSchema = new Schema({
   username: {
     type: String,
