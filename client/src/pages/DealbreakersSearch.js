@@ -1,4 +1,4 @@
-import Dealbreakers from "../components/Dealbreakers";
+import { Dealbreakers, Dealbreaker } from "../components/Dealbreakers";
 
 function DealbreakersSearch() {
   return (

@@ -7,10 +7,44 @@ import { SAVE_USER_DEALBREAKER, REMOVE_USER_DEALBREAKER } from "../utils/mutatio
 
 import Auth from "../utils/auth";
 
+const Dealbreaker = (props) => {
+  const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
+  const [removeUserDealbreaker, { error: errorRemove }] = useMutation(REMOVE_USER_DEALBREAKER);
+
+  //handle user clicking button to delete a dealbreaker
+  const handleDeleteUserDealbreaker = async (dealbreaker) => {
+    // get token
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const { data } = await removeUserDealbreaker({
+        variables: { dealbreaker: dealbreaker },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    refetch();
+  };
+
+  return (
+    <Card border="dark">
+      <Card.Body>
+        <Card.Title>{props.dealbreaker}</Card.Title>
+        <Button className="btn-block btn-danger" onClick={() => handleDeleteUserDealbreaker(props.dealbreaker)}>
+          Delete this Dealbreaker!
+        </Button>
+      </Card.Body>
+    </Card>
+  );
+};
+
 const Dealbreakers = () => {
   // set mutations
   const [saveUserDealbreaker, { error }] = useMutation(SAVE_USER_DEALBREAKER);
-  const [removeUserDealbreaker, { error: errorRemove }] = useMutation(REMOVE_USER_DEALBREAKER);
 
   // Query database to get all dealbreakers and populate into a dropdown
   const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
@@ -56,25 +90,6 @@ const Dealbreakers = () => {
     refetch();
   };
 
-  //handle user clicking button to delete a dealbreaker
-  const handleDeleteUserDealbreaker = async (dealbreaker) => {
-    // get token
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    if (!token) {
-      return false;
-    }
-
-    try {
-      const { data } = await removeUserDealbreaker({
-        variables: { dealbreaker: dealbreaker },
-      });
-    } catch (err) {
-      console.error(err);
-    }
-    refetch();
-  };
-
   // what is returned
   return (
     <>
@@ -95,16 +110,7 @@ const Dealbreakers = () => {
         <h2>{userData.dealbreakers.length ? `Viewing saved dealbreakers:` : "You have no saved dealbreakers"}</h2>
         <CardColumns>
           {userData.dealbreakers?.map((dealbreaker) => {
-            return (
-              <Card key={dealbreaker} border="dark">
-                <Card.Body>
-                  <Card.Title>{dealbreaker}</Card.Title>
-                  <Button className="btn-block btn-danger" onClick={() => handleDeleteUserDealbreaker(dealbreaker)}>
-                    Delete this Dealbreaker!
-                  </Button>
-                </Card.Body>
-              </Card>
-            );
+            return <Dealbreaker key={dealbreaker} dealbreaker={dealbreaker} />;
           })}
         </CardColumns>
       </Container>
@@ -112,4 +118,4 @@ const Dealbreakers = () => {
   );
 };
 
-export default Dealbreakers;
+export { Dealbreaker, Dealbreakers };
