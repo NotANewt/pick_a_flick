@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from "react-bootstrap";
+import { Jumbotron, Container, Col, Row, Image, Form, Button, Card, CardColumns } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 function MovieDetails() {
@@ -66,8 +66,26 @@ function MovieDetails() {
 
   return (
     <>
-      <h1>This is the Movie Details page</h1>
-      {dddId}
+      <Row key={searchedMovieDetails.dddId}>
+        <Col lg={4}>{searchedMovieDetails.posterImage ? <Image src={searchedMovieDetails.posterImage} alt={`The movie poster ${searchedMovieDetails.title}`} fluid={true} /> : null}</Col>
+
+        <Col>
+          <h3>{searchedMovieDetails.title}</h3>
+          <p className="small">Release Year: {searchedMovieDetails.year}</p>
+          <p className="small">Genre: {searchedMovieDetails.genre}</p>
+          <p>{searchedMovieDetails.overview}</p>
+          <hr />
+          <ul>
+            {searchedMovieDetails.dealbreakers?.map((dealbreaker) => {
+              return (
+                <li key={dealbreaker} className="small">
+                  {dealbreaker}
+                </li>
+              );
+            })}
+          </ul>
+        </Col>
+      </Row>
     </>
   );
 }
