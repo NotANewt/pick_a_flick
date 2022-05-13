@@ -84,8 +84,25 @@ const Dealbreakers = () => {
     handleSaveDealbreaker(dealbreakerName);
   };
 
+  function handleSaveDealbreaker(dealbreakerName) {
+    // check if dealbreaker is in the user array
+    if (dataMe?.me.dealbreakers.includes(dealbreakerName)) {
+      const x = document.getElementById("snackbar");
+
+      // Add the "show" class to DIV
+      x.classList.add("show");
+
+      // After 3 seconds, remove the show class from DIV
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+      }, 3000);
+    } else {
+      saveDealbreaker(dealbreakerName);
+    }
+  }
+
   // create function to handle saving a dealbreaker to the database
-  const handleSaveDealbreaker = async (dealbreakerName) => {
+  const saveDealbreaker = async (dealbreakerName) => {
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -110,6 +127,7 @@ const Dealbreakers = () => {
   // what is returned
   return (
     <>
+      <div id="snackbar">That dealbreaker is already in your list.</div>
       <h2>Peruse and pick your dealbreakers using the dropdown</h2>
       <select id="mySelect">
         {dealbreakerData.map((dealbreaker) => {
