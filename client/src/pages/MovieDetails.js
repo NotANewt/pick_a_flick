@@ -37,24 +37,28 @@ function MovieDetails() {
         })
         .then((data) => {
           //Set the response data if we have movies
-
           console.log(data);
+
+          const dealbreakers = data.topicItemStats;
+
+          const movieDealbreakers = dealbreakers.filter((db) => db.yesSum > db.noSum).map((db) => db.topic.name);
+
+          const movieDetails = {
+            dddId: data.item.id,
+            movieDbId: data.item.tmdbId,
+            title: data.item.name,
+            year: data.item.releaseYear,
+            genre: data.item.genre,
+            overview: data.item.overview,
+            posterImage: `https://image.tmdb.org/t/p/w200/${data.item.posterImage}`,
+            dealbreakers: movieDealbreakers,
+          };
+          console.log(movieDetails);
+          setSearchedMovieDetails(movieDetails);
         })
         .catch((e) => {
           console.log(e.message);
         });
-
-      // console.log(url);
-
-      // const response = await fetch(url, options);
-
-      // const { items } = await response.json();
-
-      // const dealbreakerList = items;
-
-      // console.log(dealbreakerList);
-
-      // setSearchedDealbreakers(dealbreakerList);
     } catch (err) {
       console.error(err);
     }
