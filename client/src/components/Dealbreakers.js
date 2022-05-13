@@ -19,9 +19,6 @@ const Dealbreakers = () => {
   const dealbreakerData = data?.dealbreaker || {};
   const userData = dataMe?.me || {};
 
-  console.log("dealbreakers", dealbreakerData);
-  console.log("user Data", userData);
-
   if (loading) {
     return <h2>LOADING DROPDOWN...</h2>;
   }
@@ -38,7 +35,13 @@ const Dealbreakers = () => {
 
   // create function to handle saving a dealbreaker to the database
   const handleSaveDealbreaker = async (dealbreakerName) => {
-    console.log("starting handleSaveDealbreaker");
+    // get token
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
     if (!dealbreakerName) {
       return false;
     }
