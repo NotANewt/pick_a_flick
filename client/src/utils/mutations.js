@@ -32,3 +32,11 @@ export const SAVE_USER_DEALBREAKER = gql`
     }
   }
 `;
+
+export const REMOVE_USER_DEALBREAKER = gql`
+  mutation removeUserDealbreaker($dealbreaker: String) {
+    removeUserDealbreaker(dealbreaker: $dealbreaker) {
+      dealbreakers
+    }
+  }
+`;

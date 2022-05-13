@@ -44,6 +44,9 @@ const resolvers = {
     saveUserDealbreaker: async (parent, { dealbreaker }, context) => {
       return await User.findByIdAndUpdate(context.user._id, { $push: { dealbreakers: dealbreaker } });
     },
+    removeUserDealbreaker: async (parent, { dealbreaker }, context) => {
+      return await User.findOneAndUpdate(context.user._id, { $pull: { dealbreakers: dealbreaker } });
+    },
   },
 };
 
