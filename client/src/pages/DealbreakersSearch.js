@@ -1,10 +1,12 @@
 import { Dealbreakers, Dealbreaker } from "../components/Dealbreakers";
+import { Container } from "react-bootstrap";
 
 function DealbreakersSearch() {
   return (
     <>
-      <h1>This is the Dealbreakers Page</h1>
-      <Dealbreakers></Dealbreakers>
+      <Container>
+        <Dealbreakers></Dealbreakers>
+      </Container>
     </>
   );
 }

@@ -1,10 +1,13 @@
 import { DealbreakerList } from "../components/Dealbreakers";
 
+import { Container } from "react-bootstrap";
+
 function Profile(props) {
   return (
     <>
-      <h1>This is the Profile Page</h1>
-      <DealbreakerList />
+      <Container>
+        <DealbreakerList />
+      </Container>
     </>
   );
 }

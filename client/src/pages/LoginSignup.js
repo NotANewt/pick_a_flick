@@ -1,12 +1,21 @@
 import SignupForm from "../components/SignupForm";
 import LoginForm from "../components/LoginForm";
 
+import { Container, Row, Col } from "react-bootstrap";
+
 function LoginSignup(props) {
   return (
     <>
-      <h1>This is the Login/Signup page</h1>
-      <SignupForm></SignupForm>
-      <LoginForm></LoginForm>
+      <Container>
+        <Row>
+          <Col>
+            <LoginForm></LoginForm>
+          </Col>
+          <Col>
+            <SignupForm></SignupForm>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }

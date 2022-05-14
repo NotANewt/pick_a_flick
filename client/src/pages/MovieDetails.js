@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Jumbotron, Container, Col, Row, Image, Form, Button, Badge } from "react-bootstrap";
+import { Container, Col, Row, Image, Form, Button, Badge } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 import { useMutation } from "@apollo/client";
@@ -57,7 +57,7 @@ function MovieDetails() {
             year: data.item.releaseYear,
             genre: data.item.genre,
             overview: data.item.overview,
-            posterImage: `https://image.tmdb.org/t/p/w200/${data.item.posterImage}`,
+            posterImage: `https://image.tmdb.org/t/p/original/${data.item.posterImage}`,
             dealbreakers: movieDealbreakers,
           };
           console.log(movieDetails);
@@ -93,29 +93,30 @@ function MovieDetails() {
 
   return (
     <>
-      <Row key={searchedMovieDetails.dddId}>
-        <Col lg={4}>{searchedMovieDetails.posterImage ? <Image src={searchedMovieDetails.posterImage} alt={`The movie poster ${searchedMovieDetails.title}`} fluid={true} /> : null}</Col>
+      <Container>
+        <Row key={searchedMovieDetails.dddId}>
+          <Col lg={4}>{searchedMovieDetails.posterImage ? <Image src={searchedMovieDetails.posterImage} alt={`The movie poster ${searchedMovieDetails.title}`} fluid={true} /> : null}</Col>
 
-        <Col>
-          <h3>{searchedMovieDetails.title}</h3>
-          <p className="small">Release Year: {searchedMovieDetails.year}</p>
-          <p className="small">Genre: {searchedMovieDetails.genre}</p>
-          <p>{searchedMovieDetails.overview}</p>
-          <hr />
-          <div>
-            {searchedMovieDetails.dealbreakers?.map((dealbreaker) => {
-              return (
-                <Badge key={dealbreaker} bg="dark" text="light" style={{ marginRight: "5px", textTransform: "capitalize" }}>
-                  {dealbreaker}
-                </Badge>
-              );
-            })}
-          </div>
-        </Col>
-        <Button className="btn-block btn-info" onClick={() => handleSaveMovie(searchedMovieDetails)}>
-          Save Movie
-        </Button>
-      </Row>
+          <Col>
+            <h3>{searchedMovieDetails.title}</h3>
+            <p className="small">Release Year: {searchedMovieDetails.year}</p>
+            <p className="small">Genre: {searchedMovieDetails.genre}</p>
+            <p>{searchedMovieDetails.overview}</p>
+            <hr />
+            <div>
+              {searchedMovieDetails.dealbreakers?.map((dealbreaker) => {
+                return (
+                  <Badge key={dealbreaker} bg="dark" style={{ marginRight: "5px", textTransform: "capitalize" }}>
+                    {dealbreaker}
+                  </Badge>
+                );
+              })}
+            </div>
+            <br />
+            <Button onClick={() => handleSaveMovie(searchedMovieDetails)}>Save Movie</Button>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }

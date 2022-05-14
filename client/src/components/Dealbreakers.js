@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Jumbotron, Container, Card, Button, Row, Col } from "react-bootstrap";
+import { Card, Button, Row, Col, Stack, Form } from "react-bootstrap";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_DEALBREAKER, QUERY_ME } from "../utils/queries";
@@ -55,11 +55,13 @@ const DealbreakerList = (props) => {
     <>
       <h2>{userData.dealbreakers.length ? `Viewing saved dealbreakers:` : "You have no saved dealbreakers"}</h2>
       <Row>
-        <Col lg={4}>
-          {userData.dealbreakers?.map((dealbreaker) => {
-            return <Dealbreaker key={dealbreaker} dealbreaker={dealbreaker} />;
-          })}
-        </Col>
+        {userData.dealbreakers?.map((dealbreaker) => {
+          return (
+            <Col lg={4} key={dealbreaker}>
+              <Dealbreaker dealbreaker={dealbreaker} />
+            </Col>
+          );
+        })}
       </Row>
     </>
   );
@@ -77,7 +79,7 @@ const Dealbreakers = () => {
   const dealbreakerData = data?.dealbreaker || {};
 
   if (loading) {
-    return <h2>LOADING DROPDOWN...</h2>;
+    return false;
   }
 
   // handle user clicking button to add new dealbreaker
@@ -130,22 +132,26 @@ const Dealbreakers = () => {
   return (
     <>
       <div id="snackbar">That dealbreaker is already in your list.</div>
-      <h2>Peruse and pick your dealbreakers using the dropdown</h2>
-      <select id="mySelect">
-        {dealbreakerData.map((dealbreaker) => {
-          return (
-            <option key={dealbreaker._id} id={dealbreaker._id}>
-              {dealbreaker.name}
-            </option>
-          );
-        })}
-      </select>
-      <Button className="btn-info" onClick={() => handleButtonClick()}>
-        Add Dealbreaker
-      </Button>
-      <Container>
-        <DealbreakerList />
-      </Container>
+      <hr />
+      <Form>
+        <Stack direction="horizontal" gap={3}>
+          <Form.Select id="mySelect">
+            {dealbreakerData.map((dealbreaker) => {
+              return (
+                <option key={dealbreaker._id} id={dealbreaker._id}>
+                  {dealbreaker.name}
+                </option>
+              );
+            })}
+          </Form.Select>
+          <Button variant="secondary" onClick={() => handleButtonClick()}>
+            Save
+          </Button>
+        </Stack>
+      </Form>
+
+      <hr />
+      <DealbreakerList />
     </>
   );
 };

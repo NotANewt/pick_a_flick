@@ -113,7 +113,7 @@ const MovieSearch = () => {
         <Row>
           {searchedMovies.map((movie) => {
             return (
-              <Col lg="4" key={movie.dddId}>
+              <Col lg="3" key={movie.dddId}>
                 <Card border="dark" style={{ marginBottom: "2rem" }}>
                   {movie.posterImage ? <Card.Img src={movie.posterImage} alt={`The movie poster ${movie.title}`} variant="top" /> : null}
                   <Card.Body>

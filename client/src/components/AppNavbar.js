@@ -11,34 +11,41 @@ const AppNavbar = () => {
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
-        <Container fluid>
+        <Container>
           <Navbar.Brand as={Link} to="/">
             Pick A Flick
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar">
-            <Nav className="ml-auto">
-              {/* if user is logged in show profile and logout */}
-              {Auth.loggedIn() ? (
-                <>
+            {/* if user is logged in show profile, dealbreakers, movies, and logout */}
+            {Auth.loggedIn() ? (
+              <>
+                <Nav className="me-auto">
                   <Link className="nav-link" to="/Profile">
                     Profile
                   </Link>
                   <Link className="nav-link" to="/Dealbreakers">
-                    Search Dealbreakers
+                    Dealbreakers
                   </Link>
                   <Link className="nav-link" to="/Movies">
-                    Search Movies
+                    Movies
                   </Link>
+                </Nav>
+                <Nav>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
-                </>
-              ) : (
-                // otherwise, show login/signup
-                <Link className="nav-link" to="/LoginSignup">
-                  Login/Sign Up
-                </Link>
-              )}
-            </Nav>
+                </Nav>
+              </>
+            ) : (
+              // otherwise, show login/signup
+              <>
+                <Nav className="me-auto"></Nav>
+                <Nav>
+                  <Link className="nav-link" to="/LoginSignup">
+                    Login/Sign Up
+                  </Link>
+                </Nav>
+              </>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>
