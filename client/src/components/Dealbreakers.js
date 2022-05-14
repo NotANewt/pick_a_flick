@@ -55,7 +55,7 @@ const DealbreakerList = (props) => {
     <>
       <h2>{userData.dealbreakers.length ? `Viewing saved dealbreakers:` : "You have no saved dealbreakers"}</h2>
       <Row>
-        <Col>
+        <Col lg={4}>
           {userData.dealbreakers?.map((dealbreaker) => {
             return <Dealbreaker key={dealbreaker} dealbreaker={dealbreaker} />;
           })}
