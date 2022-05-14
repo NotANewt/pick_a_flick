@@ -40,3 +40,20 @@ export const REMOVE_USER_DEALBREAKER = gql`
     }
   }
 `;
+
+export const SAVE_USER_MOVIE = gql`
+  mutation saveUserMovie($movieData: MovieInput) {
+    saveUserMovie(movieData: $movieData) {
+      movies {
+        dddId
+        movieDbId
+        title
+        year
+        genre
+        overview
+        posterImage
+        dealbreakers
+      }
+    }
+  }
+`;

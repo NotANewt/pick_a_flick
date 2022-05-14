@@ -1,6 +1,8 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 
+const movieSchema = require("./Movie");
+
 const userSchema = new Schema({
   username: {
     type: String,
@@ -18,6 +20,7 @@ const userSchema = new Schema({
     required: true,
   },
   dealbreakers: [String],
+  movies: [movieSchema],
 });
 
 // hash user password
