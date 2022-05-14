@@ -50,6 +50,9 @@ const resolvers = {
     saveUserMovie: async (parent, { movieData }, context) => {
       return await User.findByIdAndUpdate(context.user._id, { $push: { movies: movieData } });
     },
+    removeUserMovie: async (parent, { movieData }, context) => {
+      return await User.findByIdAndUpdate(context.user._id, { $pull: { movies: movieData } });
+    },
   },
 };
 

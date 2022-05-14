@@ -7,6 +7,16 @@ export const QUERY_ME = gql`
       username
       email
       dealbreakers
+      movies {
+        dddId
+        movieDbId
+        title
+        year
+        genre
+        overview
+        posterImage
+        dealbreakers
+      }
     }
   }
 `;

@@ -54,6 +54,7 @@ const typeDefs = gql`
     saveUserDealbreaker(dealbreaker: String): User
     removeUserDealbreaker(dealbreaker: String): User
     saveUserMovie(movieData: MovieInput): User
+    removeUserMovie(movieData: MovieInput): User
   }
 `;
 
