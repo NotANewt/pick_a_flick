@@ -67,6 +67,8 @@ const MovieSearch = () => {
       const movieData = items
         .filter((movie) => movie.tmdbId !== null)
         .filter((movie) => movie.posterImage !== null)
+        .filter((movie) => movie.genre !== null)
+        .filter((movie) => movie.numRatings > 0)
         .map((movie) => ({
           dddId: movie.id,
           movieDbId: movie.tmdbId,
@@ -76,7 +78,7 @@ const MovieSearch = () => {
           overview: movie.overview,
           posterImage: `https://image.tmdb.org/t/p/w200/${movie.posterImage}`,
         }))
-        .sort((a, b) => (a.year < b.year ? 1 : -1));
+        .sort((a, b) => (a.numRatings > b.numRatings ? -1 : 1));
 
       console.log(movieData);
 
@@ -89,9 +91,8 @@ const MovieSearch = () => {
 
   return (
     <>
-      <h2>MovieSearch goes here!</h2>
       <Container>
-        <h1>Search for Movies!</h1>
+        <hr />
         <Form onSubmit={handleFormSubmit}>
           <Row>
             <Col xs={12} md={8}>
@@ -104,28 +105,27 @@ const MovieSearch = () => {
             </Col>
           </Row>
         </Form>
+        <hr />
       </Container>
 
       <Container>
         <div id="snackbar">No search results. Please try again.</div>
-        <h2>{searchedMovies.length ? `Viewing ${searchedMovies.length} results:` : "Search for a movie to begin"}</h2>
         <Row>
-          <Col lg={4}>
-            {searchedMovies.map((movie) => {
-              return (
-                <Card key={movie.dddId} border="dark">
+          {searchedMovies.map((movie) => {
+            return (
+              <Col lg="4" key={movie.dddId}>
+                <Card border="dark" style={{ marginBottom: "2rem" }}>
                   {movie.posterImage ? <Card.Img src={movie.posterImage} alt={`The movie poster ${movie.title}`} variant="top" /> : null}
                   <Card.Body>
                     <Card.Title>{movie.title}</Card.Title>
                     <p className="small">Release Year: {movie.year}</p>
                     <p className="small">Genre: {movie.genre}</p>
-                    <Card.Text>{movie.overview}</Card.Text>
                     <Link to={`MovieDetails/${movie.dddId}`}>View Movie Details</Link>
                   </Card.Body>
                 </Card>
-              );
-            })}
-          </Col>
+              </Col>
+            );
+          })}
         </Row>
       </Container>
     </>
