@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Row, Col, Stack, Form } from "react-bootstrap";
+import { Card, Button, Row, Col, Stack, Form, Badge } from "react-bootstrap";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_DEALBREAKER, QUERY_ME } from "../utils/queries";
@@ -72,11 +72,19 @@ const Dealbreakers = () => {
   // set mutations
   const [saveUserDealbreaker, { error }] = useMutation(SAVE_USER_DEALBREAKER);
 
+  const [filteredDealbreakers, setFilteredDealbreakers] = useState([]);
+
   // Query database to get all dealbreakers and populate into a dropdown
 
-  const { loading, data } = useQuery(QUERY_DEALBREAKER);
+  const { loading, data } = useQuery(QUERY_DEALBREAKER, {
+    onCompleted: (data) => {
+      setFilteredDealbreakers(data.dealbreaker);
+    },
+  });
 
   const dealbreakerData = data?.dealbreaker || {};
+
+  console.log(filteredDealbreakers);
 
   if (loading) {
     return false;
@@ -86,6 +94,15 @@ const Dealbreakers = () => {
   const handleButtonClick = () => {
     const dealbreakerName = document.getElementById("mySelect").value;
     handleSaveDealbreaker(dealbreakerName);
+  };
+
+  //handle user filter
+  const handleFilterDealbreakers = () => {
+    const dealbreakerfilter = document.getElementById("filter").value;
+
+    const filteredDeals = dealbreakerData.filter((db) => db.name.includes(dealbreakerfilter) == true);
+
+    setFilteredDealbreakers(filteredDeals);
   };
 
   function handleSaveDealbreaker(dealbreakerName) {
@@ -136,7 +153,7 @@ const Dealbreakers = () => {
       <Form>
         <Stack direction="horizontal" gap={3}>
           <Form.Select id="mySelect">
-            {dealbreakerData.map((dealbreaker) => {
+            {filteredDealbreakers.map((dealbreaker) => {
               return (
                 <option key={dealbreaker._id} id={dealbreaker._id}>
                   {dealbreaker.name}
@@ -144,9 +161,12 @@ const Dealbreakers = () => {
               );
             })}
           </Form.Select>
+
           <Button variant="secondary" onClick={() => handleButtonClick()}>
             Save
           </Button>
+
+          <Form.Control id="filter" placeholder="filter list" onChange={() => handleFilterDealbreakers()}></Form.Control>
         </Stack>
       </Form>
 
