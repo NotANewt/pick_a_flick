@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from "react-bootstrap";
+import { Container, Col, Row, Form, Button, Card } from "react-bootstrap";
 import { useParams, Link } from "react-router-dom";
 import MovieDetails from "../pages/MovieDetails";
 
@@ -90,43 +90,43 @@ const MovieSearch = () => {
   return (
     <>
       <h2>MovieSearch goes here!</h2>
-      <Jumbotron fluid className="text-light bg-dark">
-        <Container>
-          <h1>Search for Movies!</h1>
-          <Form onSubmit={handleFormSubmit}>
-            <Form.Row>
-              <Col xs={12} md={8}>
-                <Form.Control name="searchInput" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} type="text" size="lg" placeholder="Search for a movie" />
-              </Col>
-              <Col xs={12} md={4}>
-                <Button type="submit" variant="success" size="lg">
-                  Submit Search
-                </Button>
-              </Col>
-            </Form.Row>
-          </Form>
-        </Container>
-      </Jumbotron>
+      <Container>
+        <h1>Search for Movies!</h1>
+        <Form onSubmit={handleFormSubmit}>
+          <Row>
+            <Col xs={12} md={8}>
+              <Form.Control name="searchInput" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} type="text" size="lg" placeholder="Search for a movie" />
+            </Col>
+            <Col xs={12} md={4}>
+              <Button type="submit" variant="success" size="lg">
+                Submit Search
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Container>
 
       <Container>
         <div id="snackbar">No search results. Please try again.</div>
         <h2>{searchedMovies.length ? `Viewing ${searchedMovies.length} results:` : "Search for a movie to begin"}</h2>
-        <CardColumns>
-          {searchedMovies.map((movie) => {
-            return (
-              <Card key={movie.dddId} border="dark">
-                {movie.posterImage ? <Card.Img src={movie.posterImage} alt={`The movie poster ${movie.title}`} variant="top" /> : null}
-                <Card.Body>
-                  <Card.Title>{movie.title}</Card.Title>
-                  <p className="small">Release Year: {movie.year}</p>
-                  <p className="small">Genre: {movie.genre}</p>
-                  <Card.Text>{movie.overview}</Card.Text>
-                  <Link to={`MovieDetails/${movie.dddId}`}>View Movie Details</Link>
-                </Card.Body>
-              </Card>
-            );
-          })}
-        </CardColumns>
+        <Row>
+          <Col lg={4}>
+            {searchedMovies.map((movie) => {
+              return (
+                <Card key={movie.dddId} border="dark">
+                  {movie.posterImage ? <Card.Img src={movie.posterImage} alt={`The movie poster ${movie.title}`} variant="top" /> : null}
+                  <Card.Body>
+                    <Card.Title>{movie.title}</Card.Title>
+                    <p className="small">Release Year: {movie.year}</p>
+                    <p className="small">Genre: {movie.genre}</p>
+                    <Card.Text>{movie.overview}</Card.Text>
+                    <Link to={`MovieDetails/${movie.dddId}`}>View Movie Details</Link>
+                  </Card.Body>
+                </Card>
+              );
+            })}
+          </Col>
+        </Row>
       </Container>
     </>
   );

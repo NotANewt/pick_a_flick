@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Jumbotron, Container, Col, Row, Image, Form, Button, Card, CardColumns } from "react-bootstrap";
+import { Jumbotron, Container, Col, Row, Image, Form, Button, Badge } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 import { useMutation } from "@apollo/client";
@@ -8,7 +8,7 @@ import { SAVE_USER_MOVIE } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 function MovieDetails() {
-  const [saveUserMovie, { error }] = useMutation(SAVE_USER_MOVIE);
+  const [saveUserMovie, { data, error }] = useMutation(SAVE_USER_MOVIE);
 
   // create state for holding returned doesthedogdie api data
   const [searchedMovieDetails, setSearchedMovieDetails] = useState([]);
@@ -81,8 +81,10 @@ function MovieDetails() {
 
     try {
       console.log(movieData);
-      const { data } = await saveUserMovie({
-        variables: { movies: movieData },
+      saveUserMovie({
+        variables: {
+          movieData,
+        },
       });
     } catch (err) {
       console.error(err);
@@ -100,15 +102,15 @@ function MovieDetails() {
           <p className="small">Genre: {searchedMovieDetails.genre}</p>
           <p>{searchedMovieDetails.overview}</p>
           <hr />
-          <ul>
+          <div>
             {searchedMovieDetails.dealbreakers?.map((dealbreaker) => {
               return (
-                <li key={dealbreaker} className="small">
+                <Badge key={dealbreaker} bg="dark" text="light" style={{ marginRight: "5px", textTransform: "capitalize" }}>
                   {dealbreaker}
-                </li>
+                </Badge>
               );
             })}
-          </ul>
+          </div>
         </Col>
         <Button className="btn-block btn-info" onClick={() => handleSaveMovie(searchedMovieDetails)}>
           Save Movie

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Jumbotron, Container, CardColumns, Card, Button } from "react-bootstrap";
+import { Jumbotron, Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_DEALBREAKER, QUERY_ME } from "../utils/queries";
@@ -54,11 +54,13 @@ const DealbreakerList = (props) => {
   return (
     <>
       <h2>{userData.dealbreakers.length ? `Viewing saved dealbreakers:` : "You have no saved dealbreakers"}</h2>
-      <CardColumns>
-        {userData.dealbreakers?.map((dealbreaker) => {
-          return <Dealbreaker key={dealbreaker} dealbreaker={dealbreaker} />;
-        })}
-      </CardColumns>
+      <Row>
+        <Col>
+          {userData.dealbreakers?.map((dealbreaker) => {
+            return <Dealbreaker key={dealbreaker} dealbreaker={dealbreaker} />;
+          })}
+        </Col>
+      </Row>
     </>
   );
 };
