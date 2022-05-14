@@ -76,7 +76,7 @@ const MovieSearch = () => {
           overview: movie.overview,
           posterImage: `https://image.tmdb.org/t/p/w200/${movie.posterImage}`,
         }))
-        .sort((a, b) => (a.year > b.year ? 1 : -1));
+        .sort((a, b) => (a.year < b.year ? 1 : -1));
 
       console.log(movieData);
 
