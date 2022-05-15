@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Alert, Row, Col, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_GROUP, REMOVE_GROUP } from "../utils/mutations";
@@ -158,6 +159,7 @@ const UserGroupList = () => {
                   <Card.Title>{group.groupname}</Card.Title>
                   <Card.Text>{group.description}</Card.Text>
                   <Card.Text>join code: {group.joincode}</Card.Text>
+                  <Link to={`../GroupPage/${group._id}`}>Go To Group</Link>
                   <Button className="btn-danger" onClick={() => handleDeleteUserGroup(group)}>
                     Delete
                   </Button>
