@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, Row, Col, Stack, Form, Badge, Image } from "react-bootstrap";
+import { Navigate } from "react-router-dom";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
@@ -23,7 +24,7 @@ const UserMovieList = (props) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
-      return false;
+      window.location.replace("/LoginSignup");
     }
 
     const movieData = { dddId: movie.dddId };

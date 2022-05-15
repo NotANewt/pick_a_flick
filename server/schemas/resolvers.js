@@ -42,13 +42,22 @@ const resolvers = {
       return { token, user };
     },
     saveUserDealbreaker: async (parent, { dealbreaker }, context) => {
-      return await User.findByIdAndUpdate(context.user._id, { $push: { dealbreakers: dealbreaker } });
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(context.user._id, { $push: { dealbreakers: dealbreaker } });
+        return updatedUser;
+      }
     },
     removeUserDealbreaker: async (parent, { dealbreaker }, context) => {
-      return await User.findOneAndUpdate(context.user._id, { $pull: { dealbreakers: dealbreaker } });
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(context.user._id, { $pull: { dealbreakers: dealbreaker } });
+        return updatedUser;
+      }
     },
     saveUserMovie: async (parent, { movieData }, context) => {
-      return await User.findByIdAndUpdate(context.user._id, { $push: { movies: movieData } });
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(context.user._id, { $push: { movies: movieData } });
+        return updatedUser;
+      }
     },
     removeUserMovie: async (parent, { movieData }, context) => {
       return await User.findByIdAndUpdate(context.user._id, { $pull: { movies: movieData } });

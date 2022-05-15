@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Col, Row, Image, Form, Button, Badge } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, Navigate, Link } from "react-router-dom";
 
 import { useMutation, useQuery } from "@apollo/client";
 import { SAVE_USER_MOVIE } from "../utils/mutations";
@@ -90,7 +90,7 @@ function MovieDetails() {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
-      return false;
+      window.location.replace("/LoginSignup");
     }
 
     try {
@@ -112,7 +112,7 @@ function MovieDetails() {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
-      return false;
+      return <Navigate to="./LoginSignup" />;
     }
 
     const movieData = { dddId: movie.dddId };

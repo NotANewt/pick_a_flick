@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button, ButtonGroup, Row, Col, Stack, Form, Badge } from "react-bootstrap";
+import { Navigate } from "react-router-dom";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_DEALBREAKER, QUERY_ME } from "../utils/queries";
@@ -17,7 +18,7 @@ const Dealbreaker = (props) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
-      return false;
+      window.location.replace("/LoginSignup");
     }
 
     try {
@@ -128,7 +129,7 @@ const Dealbreakers = () => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
-      return false;
+      return <Navigate to="./LoginSignup" />;
     }
 
     if (!dealbreakerName) {
