@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Dealbreaker } = require("../models");
+const { User, Dealbreaker, Group } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
@@ -15,6 +15,9 @@ const resolvers = {
     },
     dealbreaker: async () => {
       return Dealbreaker.find({});
+    },
+    group: async () => {
+      return Group.find({});
     },
   },
 
@@ -61,6 +64,10 @@ const resolvers = {
     },
     removeUserMovie: async (parent, { movieData }, context) => {
       return await User.findByIdAndUpdate(context.user._id, { $pull: { movies: movieData } });
+    },
+    addGroup: async (parent, args) => {
+      const newGroup = await Group.create(args);
+      return newGroup;
     },
   },
 };

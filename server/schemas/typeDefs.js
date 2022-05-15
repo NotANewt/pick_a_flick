@@ -43,9 +43,17 @@ const typeDefs = gql`
     not_name: String
   }
 
+  type Group {
+    _id: ID!
+    joincode: String
+    admin: String
+    movies: [Movie]
+  }
+
   type Query {
     me: User
     dealbreaker: [Dealbreaker]
+    group: [Group]
   }
 
   type Mutation {
@@ -55,6 +63,7 @@ const typeDefs = gql`
     removeUserDealbreaker(dealbreaker: String): User
     saveUserMovie(movieData: MovieInput): User
     removeUserMovie(movieData: MovieInput): User
+    addGroup(joincode: String, admin: String): Group
   }
 `;
 
