@@ -2,18 +2,31 @@ import React, { useState, useEffect } from "react";
 import { Container, Col, Row, Image, Form, Button, Badge } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { SAVE_USER_MOVIE } from "../utils/mutations";
+import { QUERY_ME } from "../utils/queries";
+import { REMOVE_USER_MOVIE } from "../utils/mutations";
 
 import Auth from "../utils/auth";
 
 function MovieDetails() {
+  const [removeUserMovie, { error: errorRemove }] = useMutation(REMOVE_USER_MOVIE);
   const [saveUserMovie, { data, error }] = useMutation(SAVE_USER_MOVIE);
+  const {
+    loading: loadingMe,
+    data: dataMe,
+    refetch,
+  } = useQuery(QUERY_ME, {
+    onCompleted: (dataMe) => {
+      console.log("completed query", dataMe);
+    },
+  });
+
+  const userData = dataMe?.me || {};
 
   // create state for holding returned doesthedogdie api data
   const [searchedMovieDetails, setSearchedMovieDetails] = useState([]);
   const { dddId } = useParams();
-  console.log(dddId);
 
   useEffect(() => {
     getDealbreakers();
@@ -36,15 +49,12 @@ function MovieDetails() {
 
       const url = `${corsAnywhere}https://www.doesthedogdie.com/media/${dddId}`;
 
-      console.log(url);
-
       await fetch(url, options)
         .then((response) => {
           return response.json();
         })
         .then((data) => {
           //Set the response data if we have movies
-          console.log(data);
 
           const dealbreakers = data.topicItemStats;
 
@@ -60,7 +70,6 @@ function MovieDetails() {
             posterImage: `https://image.tmdb.org/t/p/original/${data.item.posterImage}`,
             dealbreakers: movieDealbreakers,
           };
-          console.log(movieDetails);
           setSearchedMovieDetails(movieDetails);
         })
         .catch((e) => {
@@ -80,7 +89,6 @@ function MovieDetails() {
     }
 
     try {
-      console.log(movieData);
       saveUserMovie({
         variables: {
           movieData,
@@ -89,7 +97,42 @@ function MovieDetails() {
     } catch (err) {
       console.error(err);
     }
+
+    refetch();
   };
+
+  //handle user clicking button to delete a movie
+  const handleDeleteUserMovie = async (movie) => {
+    // get token
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    const movieData = { dddId: movie.dddId };
+
+    try {
+      const { data } = await removeUserMovie({
+        variables: {
+          movieData,
+        },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    refetch();
+  };
+
+  const filteredMovies = userData.movies?.filter((movie) => searchedMovieDetails.title?.includes(movie.title));
+
+  const hasMovie = filteredMovies?.length > 0;
+
+  console.log("Filtered Movies", filteredMovies);
+  console.log("Has Movie", hasMovie);
+
+  let theBadgeBg = "dark";
+  let foundDealbreaker = false;
 
   return (
     <>
@@ -105,15 +148,27 @@ function MovieDetails() {
             <hr />
             <div>
               {searchedMovieDetails.dealbreakers?.map((dealbreaker) => {
+                userData.dealbreakers?.includes(dealbreaker) ? ((theBadgeBg = "danger"), (foundDealbreaker = true)) : (theBadgeBg = "dark");
                 return (
-                  <Badge key={dealbreaker} bg="dark" style={{ marginRight: "5px", textTransform: "capitalize" }}>
+                  <Badge key={dealbreaker} bg={theBadgeBg} style={{ marginRight: "5px", textTransform: "capitalize" }}>
                     {dealbreaker}
                   </Badge>
                 );
               })}
             </div>
             <br />
-            <Button onClick={() => handleSaveMovie(searchedMovieDetails)}>Save Movie</Button>
+            {foundDealbreaker === true && <div>This movie contains one of your dealbreakers.</div>}
+            {foundDealbreaker === false && hasMovie === false && <Button onClick={() => handleSaveMovie(searchedMovieDetails)}>Save Movie</Button>}
+            {hasMovie === true && (
+              <Button variant="danger" onClick={() => handleDeleteUserMovie(searchedMovieDetails)}>
+                Remove Movie
+              </Button>
+            )}
+
+            <br />
+            <Button href="/Movies" style={{ marginTop: "1rem" }}>
+              Back To Search
+            </Button>
           </Col>
         </Row>
       </Container>
