@@ -1,6 +1,6 @@
 import { DealbreakerList } from "../components/Dealbreakers";
 import UserMovieList from "../components/UserMovies";
-import CreateGroupForm from "../components/CreateGroupForm";
+import { CreateGroupForm, UserGroupList } from "../components/Groups";
 
 import { Container } from "react-bootstrap";
 
@@ -9,6 +9,7 @@ function Profile(props) {
     <>
       <Container>
         <CreateGroupForm />
+        <UserGroupList />
         <UserMovieList />
         <DealbreakerList />
       </Container>

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Row, Col, Card } from "react-bootstrap";
 
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_GROUP } from "../utils/mutations";
-import { QUERY_ME } from "../utils/queries";
+import { QUERY_ME, QUERY_GROUP } from "../utils/queries";
 
 import Auth from "../utils/auth";
 
 const CreateGroupForm = () => {
   const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
 
-  const userData = dataMe?.me || {};
+  const userData = dataMe?.me || [];
 
   console.log("UserData in CreateGroupForm", userData);
 
@@ -111,4 +111,42 @@ const CreateGroupForm = () => {
   );
 };
 
-export default CreateGroupForm;
+const UserGroupList = () => {
+  const { loading: loadingMe, data: dataMe } = useQuery(QUERY_ME);
+  const userData = dataMe?.me || [];
+
+  console.log("user data", userData);
+  const userId = userData._id;
+  console.log("user Id", userId);
+
+  const { loading, data, refetch } = useQuery(QUERY_GROUP);
+  const groupData = data?.group || [];
+
+  console.log("group data", groupData);
+
+  const myGroups = groupData?.filter((group) => group.users.includes(userId) == true);
+
+  console.log("my groups", myGroups);
+
+  return (
+    <>
+      <h2>{myGroups.length ? `My groups:` : "You do not have any groups"}</h2>
+      <Row>
+        {myGroups.map((group) => {
+          return (
+            <Col lg={3} key={group._id}>
+              <Card border="dark" style={{ marginBottom: "2rem" }}>
+                <Card.Body className="d-grid gap-2"></Card.Body>
+                <Card.Title>{group.groupname}</Card.Title>
+                <Card.Text>{group.description}</Card.Text>
+                <Card.Text>join code: {group.joincode}</Card.Text>
+              </Card>
+            </Col>
+          );
+        })}
+      </Row>
+    </>
+  );
+};
+
+export { CreateGroupForm, UserGroupList };

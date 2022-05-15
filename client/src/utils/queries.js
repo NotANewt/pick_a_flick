@@ -29,3 +29,16 @@ export const QUERY_DEALBREAKER = gql`
     }
   }
 `;
+
+export const QUERY_GROUP = gql`
+  query Group {
+    group {
+      _id
+      joincode
+      admin
+      users
+      groupname
+      description
+    }
+  }
+`;
