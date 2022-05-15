@@ -74,3 +74,11 @@ export const REMOVE_USER_MOVIE = gql`
     }
   }
 `;
+
+export const ADD_GROUP = gql`
+  mutation addGroup($joincode: String, $admin: String, $groupname: String, $description: String) {
+    addGroup(joincode: $joincode, admin: $admin, groupname: $groupname, description: $description) {
+      _id
+    }
+  }
+`;
