@@ -82,3 +82,11 @@ export const ADD_GROUP = gql`
     }
   }
 `;
+
+export const REMOVE_GROUP = gql`
+  mutation removeGroup($id: String) {
+    removeGroup(_id: $id) {
+      joincode
+    }
+  }
+`;

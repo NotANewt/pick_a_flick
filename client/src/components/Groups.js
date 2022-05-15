@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Alert, Row, Col, Card } from "react-bootstrap";
 
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_GROUP } from "../utils/mutations";
+import { ADD_GROUP, REMOVE_GROUP } from "../utils/mutations";
 import { QUERY_ME, QUERY_GROUP } from "../utils/queries";
 
 import Auth from "../utils/auth";
@@ -115,18 +115,36 @@ const UserGroupList = () => {
   const { loading: loadingMe, data: dataMe } = useQuery(QUERY_ME);
   const userData = dataMe?.me || [];
 
-  console.log("user data", userData);
   const userId = userData._id;
-  console.log("user Id", userId);
 
   const { loading, data, refetch } = useQuery(QUERY_GROUP);
   const groupData = data?.group || [];
 
-  console.log("group data", groupData);
-
   const myGroups = groupData?.filter((group) => group.users.includes(userId) == true);
 
-  console.log("my groups", myGroups);
+  const [removeGroup, { error: errorRemove }] = useMutation(REMOVE_GROUP);
+
+  //handle user clicking button to delete a group
+  const handleDeleteUserGroup = async (group) => {
+    // get token
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      window.location.replace("/LoginSignup");
+    }
+
+    const id = group._id;
+    console.log("id", id);
+
+    try {
+      const { data } = await removeGroup({
+        variables: { id: id },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    refetch();
+  };
 
   return (
     <>
@@ -136,10 +154,14 @@ const UserGroupList = () => {
           return (
             <Col lg={3} key={group._id}>
               <Card border="dark" style={{ marginBottom: "2rem" }}>
-                <Card.Body className="d-grid gap-2"></Card.Body>
-                <Card.Title>{group.groupname}</Card.Title>
-                <Card.Text>{group.description}</Card.Text>
-                <Card.Text>join code: {group.joincode}</Card.Text>
+                <Card.Body className="d-grid gap-2">
+                  <Card.Title>{group.groupname}</Card.Title>
+                  <Card.Text>{group.description}</Card.Text>
+                  <Card.Text>join code: {group.joincode}</Card.Text>
+                  <Button className="btn-danger" onClick={() => handleDeleteUserGroup(group)}>
+                    Delete
+                  </Button>
+                </Card.Body>
               </Card>
             </Col>
           );

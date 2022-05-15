@@ -69,6 +69,9 @@ const resolvers = {
       const newGroup = await Group.create(args);
       return newGroup;
     },
+    removeGroup: async (parent, args) => {
+      return await Group.findOneAndDelete(args);
+    },
   },
 };
 
