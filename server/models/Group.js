@@ -4,6 +4,7 @@ const movieSchema = require("./Movie");
 
 const groupSchema = new Schema({
   admin: String,
+  users: [String],
   joincode: String,
   groupname: String,
   description: String,

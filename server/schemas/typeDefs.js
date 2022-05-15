@@ -47,6 +47,7 @@ const typeDefs = gql`
     _id: ID!
     joincode: String
     admin: String
+    users: [String]
     groupname: String
     description: String
     movies: [Movie]
@@ -65,7 +66,7 @@ const typeDefs = gql`
     removeUserDealbreaker(dealbreaker: String): User
     saveUserMovie(movieData: MovieInput): User
     removeUserMovie(movieData: MovieInput): User
-    addGroup(joincode: String, admin: String, groupname: String, description: String): Group
+    addGroup(joincode: String, admin: String, users: [String], groupname: String, description: String): Group
   }
 `;
 

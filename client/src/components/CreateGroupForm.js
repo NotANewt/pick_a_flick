@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { ADD_GROUP } from "../utils/mutations";
+import { QUERY_ME } from "../utils/queries";
 
 import Auth from "../utils/auth";
 
 const CreateGroupForm = () => {
+  const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
+
+  const userData = dataMe?.me || {};
+
+  console.log("UserData in CreateGroupForm", userData);
+
   // set initial form state
   const [groupFormData, setGroupFormData] = useState({
     groupname: "",
     description: "",
     joincode: "",
+    admin: "",
+    users: "",
   });
 
   // set state for form validation
@@ -45,6 +54,9 @@ const CreateGroupForm = () => {
     }
 
     try {
+      groupFormData.admin = userData._id;
+      groupFormData.users = userData._id;
+
       const { data } = await addGroup({
         variables: { ...groupFormData },
       });
@@ -57,6 +69,8 @@ const CreateGroupForm = () => {
       groupname: "",
       description: "",
       joincode: "",
+      admin: "",
+      users: "",
     });
   };
 
