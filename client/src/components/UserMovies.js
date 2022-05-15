@@ -42,15 +42,22 @@ const UserMovieList = (props) => {
 
   return (
     <>
-      <h2>{userData.movies.length ? `Viewing saved movies:` : "You have no saved movies"}</h2>
+      <h2>{userData.movies.length ? `Saved movies:` : "You have no saved movies"}</h2>
       <Row>
         {userData.movies?.map((movie) => {
           return (
-            <Col lg={4} key={movie.title}>
-              {movie.posterImage ? <Image src={movie.posterImage} alt={`The movie poster ${movie.title}`} fluid={true} /> : null}
-              <Button className="btn-block btn-danger" onClick={() => handleDeleteUserMovie(movie)}>
-                Delete
-              </Button>
+            <Col lg={3} key={movie.title}>
+              <Card border="dark" style={{ marginBottom: "2rem" }}>
+                <Card.Img variant="top" src={movie.posterImage} alt={`The movie poster ${movie.title}`} />
+                <Card.Body className="d-grid gap-2">
+                  <Button style={{ marginBottom: "1rem", marginTop: "1rem" }} href={`../Movies/MovieDetails/${movie.dddId}`}>
+                    View Movie Details
+                  </Button>
+                  <Button className="btn-danger" onClick={() => handleDeleteUserMovie(movie)}>
+                    Delete
+                  </Button>
+                </Card.Body>
+              </Card>
             </Col>
           );
         })}

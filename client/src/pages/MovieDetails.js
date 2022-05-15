@@ -28,10 +28,12 @@ function MovieDetails() {
   const [searchedMovieDetails, setSearchedMovieDetails] = useState([]);
   const { dddId } = useParams();
 
+  // call getDealbreakers function on page load
   useEffect(() => {
     getDealbreakers();
   }, []);
 
+  // api call from does the dog die to get movie media information, including dealbreakers
   const getDealbreakers = async () => {
     try {
       const options = {
@@ -56,8 +58,10 @@ function MovieDetails() {
         .then((data) => {
           //Set the response data if we have movies
 
+          // pull out only the dealbreakers from the data
           const dealbreakers = data.topicItemStats;
 
+          // filter out the dealbreakers so only the ones with more yes than no votes are included
           const movieDealbreakers = dealbreakers.filter((db) => db.yesSum > db.noSum).map((db) => db.topic.name);
 
           const movieDetails = {
@@ -80,6 +84,7 @@ function MovieDetails() {
     }
   };
 
+  // handle user clicking save movie button
   const handleSaveMovie = async (movieData) => {
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -124,13 +129,11 @@ function MovieDetails() {
     refetch();
   };
 
+  // check if the movie has already been added to the user
   const filteredMovies = userData.movies?.filter((movie) => searchedMovieDetails.title?.includes(movie.title));
-
   const hasMovie = filteredMovies?.length > 0;
 
-  console.log("Filtered Movies", filteredMovies);
-  console.log("Has Movie", hasMovie);
-
+  // set variables that will be used in the return
   let theBadgeBg = "dark";
   let foundDealbreaker = false;
 
@@ -157,8 +160,11 @@ function MovieDetails() {
               })}
             </div>
             <br />
+            {/* if movie has one of the user's dealbreaker, show a div to notify user */}
             {foundDealbreaker === true && <div>This movie contains one of your dealbreakers.</div>}
+            {/* if movie does not have one of the user's dealbraekers and the movie is not already save to the user, show the Save Movie button */}
             {foundDealbreaker === false && hasMovie === false && <Button onClick={() => handleSaveMovie(searchedMovieDetails)}>Save Movie</Button>}
+            {/* if movie has already been saved to a user, show the Remove Movie button */}
             {hasMovie === true && (
               <Button variant="danger" onClick={() => handleDeleteUserMovie(searchedMovieDetails)}>
                 Remove Movie

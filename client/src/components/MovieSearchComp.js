@@ -1,34 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Container, Col, Row, Form, Button, Card } from "react-bootstrap";
-import { useParams, Link } from "react-router-dom";
-import MovieDetails from "../pages/MovieDetails";
+import { Link } from "react-router-dom";
 
-import { useMutation } from "@apollo/client";
-// import { SAVE_MOVIE } from "../utils/mutations";
-
+//
 const MovieSearch = () => {
   // create state for holding returned doesthedogdie api data
   const [searchedMovies, setSearchedMovies] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState("");
 
-  // const [saveMovie, { error }] = useMutation(SAVE_MOVIE);
-
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    // if the search input was empty
     if (!searchInput) {
+      // snackbar to notify user that no movies were found in the search
       const x = document.getElementById("snackbar");
-
       // Add the "show" class to DIV
       x.classList.add("show");
-
       // After 3 seconds, remove the show class from DIV
       setTimeout(function () {
         x.className = x.className.replace("show", "");
       }, 3000);
     }
 
+    // fetch from does the dog die
     try {
       const options = {
         method: "GET",
@@ -45,19 +41,15 @@ const MovieSearch = () => {
 
       const url = `${corsAnywhere}https://www.doesthedogdie.com/dddsearch?q=${searchInput}`;
 
-      console.log(url);
-
       const response = await fetch(url, options);
       const { items } = await response.json();
 
-      console.log(items);
-
+      // if the search returned no movies
       if (items.length == 0) {
+        // snackbar to notify user that no movies were found in the search
         const x = document.getElementById("snackbar");
-
         // Add the "show" class to DIV
         x.classList.add("show");
-
         // After 3 seconds, remove the show class from DIV
         setTimeout(function () {
           x.className = x.className.replace("show", "");
@@ -65,10 +57,12 @@ const MovieSearch = () => {
       }
 
       const movieData = items
+        // filter through movieData to remove any items that are missing tmdbId, poster images, genres, or nave no user ratings
         .filter((movie) => movie.tmdbId !== null)
         .filter((movie) => movie.posterImage !== null)
         .filter((movie) => movie.genre !== null)
         .filter((movie) => movie.numRatings > 0)
+        // map through remaining items and take out relevant data
         .map((movie) => ({
           dddId: movie.id,
           movieDbId: movie.tmdbId,
@@ -78,10 +72,10 @@ const MovieSearch = () => {
           overview: movie.overview,
           posterImage: `https://image.tmdb.org/t/p/w200/${movie.posterImage}`,
         }))
+        // sort by number of user ratings
         .sort((a, b) => (a.numRatings > b.numRatings ? -1 : 1));
 
-      console.log(movieData);
-
+      // set state
       setSearchedMovies(movieData);
       setSearchInput("");
     } catch (err) {

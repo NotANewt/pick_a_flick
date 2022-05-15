@@ -7,8 +7,8 @@ function Profile(props) {
   return (
     <>
       <Container>
-        <DealbreakerList />
         <UserMovieList />
+        <DealbreakerList />
       </Container>
     </>
   );

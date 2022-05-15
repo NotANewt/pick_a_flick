@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Row, Col, Stack, Form, Badge } from "react-bootstrap";
+import { Card, Button, ButtonGroup, Row, Col, Stack, Form, Badge } from "react-bootstrap";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_DEALBREAKER, QUERY_ME } from "../utils/queries";
@@ -30,20 +30,22 @@ const Dealbreaker = (props) => {
     refetch();
   };
 
+  // Dealbreaker card with delete button
   return (
-    <Card border="dark">
-      <Card.Body>
-        <Card.Title>{props.dealbreaker}</Card.Title>
-        <Button className="btn-block btn-danger" onClick={() => handleDeleteUserDealbreaker(props.dealbreaker)}>
-          Delete this Dealbreaker!
-        </Button>
-      </Card.Body>
-    </Card>
+    <ButtonGroup size="sm" className="mb-2, me-2">
+      <Button disabled variant="dark" style={{ textTransform: "capitalize", opacity: 1 }}>
+        {props.dealbreaker}
+      </Button>
+      <Button variant="danger" onClick={() => handleDeleteUserDealbreaker(props.dealbreaker)}>
+        Remove
+      </Button>
+    </ButtonGroup>
   );
 };
 
+// List of saved user dealbreakers
 const DealbreakerList = (props) => {
-  const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
+  const { loading: loadingMe, data: dataMe } = useQuery(QUERY_ME);
 
   const userData = dataMe?.me || {};
 
@@ -53,20 +55,18 @@ const DealbreakerList = (props) => {
 
   return (
     <>
-      <h2>{userData.dealbreakers.length ? `Viewing saved dealbreakers:` : "You have no saved dealbreakers"}</h2>
-      <Row>
-        {userData.dealbreakers?.map((dealbreaker) => {
-          return (
-            <Col lg={4} key={dealbreaker}>
-              <Dealbreaker dealbreaker={dealbreaker} />
-            </Col>
-          );
-        })}
-      </Row>
+      <h2>{userData.dealbreakers.length ? `Saved dealbreakers:` : "You have no saved dealbreakers"}</h2>
+      {userData.dealbreakers?.map((dealbreaker) => {
+        return <Dealbreaker key={dealbreaker} dealbreaker={dealbreaker} />;
+      })}
     </>
   );
 };
 
+// Search database to get all available dealbreakers and use to create dropdown menu
+// Dropdown is filtered as user types in search criteria
+// Button adds a new dealbreaker to a user
+// Button removes dealbreaker from user
 const Dealbreakers = () => {
   const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
   // set mutations
@@ -90,12 +90,6 @@ const Dealbreakers = () => {
     return false;
   }
 
-  // handle user clicking button to add new dealbreaker
-  const handleButtonClick = () => {
-    const dealbreakerName = document.getElementById("mySelect").value;
-    handleSaveDealbreaker(dealbreakerName);
-  };
-
   //handle user filter
   const handleFilterDealbreakers = () => {
     const dealbreakerfilter = document.getElementById("filter").value;
@@ -105,14 +99,20 @@ const Dealbreakers = () => {
     setFilteredDealbreakers(filteredDeals);
   };
 
+  // handle user clicking button to add new dealbreaker
+  const handleButtonClick = () => {
+    const dealbreakerName = document.getElementById("mySelect").value;
+    handleSaveDealbreaker(dealbreakerName);
+  };
+
+  // handle saving a dealbreaker to a user
   function handleSaveDealbreaker(dealbreakerName) {
     // check if dealbreaker is in the user array
     if (dataMe?.me.dealbreakers.includes(dealbreakerName)) {
+      // snackbar to notify user
       const x = document.getElementById("snackbar");
-
       // Add the "show" class to DIV
       x.classList.add("show");
-
       // After 3 seconds, remove the show class from DIV
       setTimeout(function () {
         x.className = x.className.replace("show", "");
@@ -162,7 +162,7 @@ const Dealbreakers = () => {
             })}
           </Form.Select>
 
-          <Button variant="secondary" onClick={() => handleButtonClick()}>
+          <Button variant="primary" onClick={() => handleButtonClick()}>
             Save
           </Button>
 
