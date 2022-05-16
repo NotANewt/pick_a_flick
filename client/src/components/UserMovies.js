@@ -7,7 +7,9 @@ import { QUERY_ME } from "../utils/queries";
 import { REMOVE_USER_MOVIE, SAVE_USER_MOVIE_TO_GROUP } from "../utils/mutations";
 
 import Auth from "../utils/auth";
+import { GroupMovieList } from "../components/Groups";
 
+// Show list of user's movies on Profile page
 const UserMovieList = (props) => {
   const [removeUserMovie, { error }] = useMutation(REMOVE_USER_MOVIE);
 
@@ -69,6 +71,8 @@ const UserMovieList = (props) => {
   );
 };
 
+// Save a user's movie to the group
+// Show list of user's movies on the GroupPage
 const UserMovieListForGroup = (props) => {
   const [saveUserMovieToGroup, { error: errorSave }] = useMutation(SAVE_USER_MOVIE_TO_GROUP);
   const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
@@ -102,7 +106,6 @@ const UserMovieListForGroup = (props) => {
       dealbreakers: movie.dealbreakers,
     };
 
-    //  TODO: update to add move to a group
     try {
       const { data } = await saveUserMovieToGroup({
         variables: {
@@ -115,6 +118,8 @@ const UserMovieListForGroup = (props) => {
       console.error(err);
     }
     refetch();
+    // TODO: re organize code so the group's movie list refetches when a movie is saved to it
+    location.reload();
   };
 
   return (

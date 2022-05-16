@@ -176,7 +176,8 @@ const UserGroupList = () => {
   );
 };
 
-// The group list of movies on the GroupPage
+// Remove a movie from a group
+// Show group's movies
 const GroupMovieList = () => {
   const [removeMovieFromGroup, { error }] = useMutation(REMOVE_MOVIE_FROM_GROUP);
   const { loading, data, refetch } = useQuery(QUERY_GROUP);
