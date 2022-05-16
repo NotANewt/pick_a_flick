@@ -40,7 +40,7 @@ function GroupPage() {
     <>
       <h2>Welcome to {thisGroupData?.groupname}</h2>
       <p>{thisGroupData?.description}</p>
-      <UserMovieListForGroup />
+      <UserMovieListForGroup thisGroupId={thisGroupId} />
     </>
   );
 }

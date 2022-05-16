@@ -85,26 +85,32 @@ const UserMovieListForGroup = (props) => {
       return <Navigate to="./LoginSignup" />;
     }
 
-    const movieData = {
-      dddId: 1111,
-      movieDbId: 2222,
-      title: "test title",
-      year: "1969",
-      genre: "comedy",
-      overview: "overview",
-      posterImage: "https://image.tmdb.org/t/p/w200/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
-      dealbreakers: ["a cat dies"],
-    };
+    const id = String(props.thisGroupId);
 
-    console.log("movieData", movieData);
+    console.log("id", id);
+
+    const movieData = {
+      dddId: movie.dddId,
+      movieDbId: movie.movieDbId,
+      title: movie.title,
+      year: movie.year,
+      genre: movie.genre,
+      overview: movie.overview,
+      posterImage: movie.posterImage,
+      dealbreakers: movie.dealbreakers,
+    };
 
     //  TODO: update to add move to a group
     try {
       const { data } = await saveUserMovieToGroup({
         variables: {
-          movieData,
+          _id: "628178181e4ac9df6683f7db",
+          movieData: {
+            title: "button click test",
+          },
         },
       });
+      console.log(data);
     } catch (err) {
       console.error(err);
     }
