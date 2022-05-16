@@ -72,6 +72,12 @@ const resolvers = {
     removeGroup: async (parent, args) => {
       return await Group.findOneAndDelete(args);
     },
+    saveUserMovieToGroup: async (parent, { movieData }, context) => {
+      if (context.group) {
+        const updatedGroup = await Group.findByIdAndUpdate(context.group._id, { $push: { movies: movieData } });
+        return updatedGroup;
+      }
+    },
   },
 };
 
