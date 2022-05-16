@@ -109,3 +109,11 @@ export const REMOVE_MOVIE_FROM_GROUP = gql`
     }
   }
 `;
+
+export const ADD_USER_TO_GROUP = gql`
+  mutation addUserToGroup($id: String, $user: String) {
+    addUserToGroup(_id: $id, user: $user) {
+      users
+    }
+  }
+`;

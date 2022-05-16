@@ -19,8 +19,6 @@ function GroupPage() {
 
   const userData = dataMe?.me || [];
 
-  console.log("userData", userData);
-
   // query group to get the data for this group by id
   const { loading, data } = useQuery(QUERY_GROUP);
   const groupData = data?.group || [];
@@ -29,15 +27,44 @@ function GroupPage() {
 
   const thisGroupData = thisGroupDataArray[0];
 
-  return (
-    <>
-      <Container>
-        <h2>Welcome to {thisGroupData?.groupname}</h2>
-        <p>{thisGroupData?.description}</p>
-        <GroupMovieList />
-        <UserMovieListForGroup thisGroupId={thisGroupId} />
-      </Container>
-    </>
-  );
+  const handleJoinGroup = (e) => {
+    e.preventDefault();
+    const thisGroupJoinCode = thisGroupData.joincode;
+    const userProvidedJoinCode = document.getElementById("joincode").value;
+
+    console.log("thisGroupJoinCode", thisGroupJoinCode);
+    console.log("userProvidedJoinCode", userProvidedJoinCode);
+
+    if (thisGroupJoinCode == userProvidedJoinCode) {
+      console.log("joining group");
+    } else {
+      console.log("wrong join code");
+    }
+  };
+
+  if (thisGroupData?.users.includes(userData._id)) {
+    return (
+      <>
+        <Container>
+          <h2>Welcome to {thisGroupData?.groupname}</h2>
+          <p>{thisGroupData?.description}</p>
+          <GroupMovieList />
+          <UserMovieListForGroup thisGroupId={thisGroupId} />
+        </Container>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <h2>Join Group Form</h2>
+        <Form onSubmit={handleJoinGroup}>
+          <Form.Group>
+            <Form.Control type="text" placeholder="join code" id="joincode"></Form.Control>
+            <Button type="submit">Join Group</Button>
+          </Form.Group>
+        </Form>
+      </>
+    );
+  }
 }
 export default GroupPage;

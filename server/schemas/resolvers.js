@@ -80,6 +80,10 @@ const resolvers = {
       const updatedGroup = await Group.findByIdAndUpdate(_id, { $pull: { movies: movieData } });
       return updatedGroup;
     },
+    addUserToGroup: async (parent, { _id, user }) => {
+      const updatedGroup = await Group.findByIdAndUpdate(_id, { $push: { users: user } });
+      return updatedGroup;
+    },
   },
 };
 
