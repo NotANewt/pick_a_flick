@@ -76,6 +76,10 @@ const resolvers = {
       const updatedGroup = await Group.findByIdAndUpdate(_id, { $push: { movies: movieData } });
       return updatedGroup;
     },
+    removeMovieFromGroup: async (parent, { _id, movieData }) => {
+      const updatedGroup = await Group.findByIdAndUpdate(_id, { $pull: { movies: movieData } });
+      return updatedGroup;
+    },
   },
 };
 

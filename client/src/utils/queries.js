@@ -39,6 +39,16 @@ export const QUERY_GROUP = gql`
       users
       groupname
       description
+      movies {
+        dddId
+        movieDbId
+        title
+        year
+        genre
+        overview
+        posterImage
+        dealbreakers
+      }
     }
   }
 `;

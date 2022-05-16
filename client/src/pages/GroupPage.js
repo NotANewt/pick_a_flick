@@ -3,6 +3,7 @@ import { useParams, Navigate, Link } from "react-router-dom";
 import { Container, Col, Row, Image, Form, Button, Badge } from "react-bootstrap";
 
 import { UserMovieListForGroup } from "../components/UserMovies";
+import { GroupMovieList } from "../components/Groups";
 
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME, QUERY_GROUP } from "../utils/queries";
@@ -12,8 +13,6 @@ function GroupPage() {
   const { _id } = useParams();
 
   const thisGroupId = _id;
-
-  console.log("thisGroupId", thisGroupId);
 
   // query the user to get favorite movies and dealbreakers
   const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
@@ -26,21 +25,18 @@ function GroupPage() {
   const { loading, data } = useQuery(QUERY_GROUP);
   const groupData = data?.group || [];
 
-  console.log("groupData", groupData);
-
   const thisGroupDataArray = groupData?.filter((group) => group._id.includes(thisGroupId) == true);
-
-  console.log("thisGroupDataArray", thisGroupDataArray);
 
   const thisGroupData = thisGroupDataArray[0];
 
-  console.log("thisGroupData", thisGroupData);
-
   return (
     <>
-      <h2>Welcome to {thisGroupData?.groupname}</h2>
-      <p>{thisGroupData?.description}</p>
-      <UserMovieListForGroup thisGroupId={thisGroupId} />
+      <Container>
+        <h2>Welcome to {thisGroupData?.groupname}</h2>
+        <p>{thisGroupData?.description}</p>
+        <GroupMovieList />
+        <UserMovieListForGroup thisGroupId={thisGroupId} />
+      </Container>
     </>
   );
 }

@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Alert, Row, Col, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Form, Button, Alert, Row, Col, Card, Container } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_GROUP, REMOVE_GROUP } from "../utils/mutations";
+import { ADD_GROUP, REMOVE_GROUP, REMOVE_MOVIE_FROM_GROUP } from "../utils/mutations";
 import { QUERY_ME, QUERY_GROUP } from "../utils/queries";
 
 import Auth from "../utils/auth";
 
+// The create a group form on the Profile Page
 const CreateGroupForm = () => {
   const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
 
   const userData = dataMe?.me || [];
-
-  console.log("UserData in CreateGroupForm", userData);
 
   // set initial form state
   const [groupFormData, setGroupFormData] = useState({
@@ -77,41 +76,44 @@ const CreateGroupForm = () => {
 
   return (
     <>
-      {/* This is needed for the validation functionality above */}
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-        {/* show alert if server response is bad */}
-        <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant="danger">
-          Something went wrong with creating your group.
-        </Alert>
+      <Container>
+        {/* This is needed for the validation functionality */}
+        <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+          {/* show alert if server response is bad */}
+          <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant="danger">
+            Something went wrong with creating your group.
+          </Alert>
 
-        <h2>Create A New Group</h2>
+          <h2>Create A New Group</h2>
 
-        <Form.Group>
-          <Form.Label htmlFor="groupname">Group Name</Form.Label>
-          <Form.Control type="text" placeholder="Give your movie group a name!" name="groupname" onChange={handleInputChange} value={groupFormData.groupname} required />
-          <Form.Control.Feedback type="invalid">A name is required!</Form.Control.Feedback>
-        </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor="groupname">Group Name</Form.Label>
+            <Form.Control type="text" placeholder="Give your movie group a name!" name="groupname" onChange={handleInputChange} value={groupFormData.groupname} required />
+            <Form.Control.Feedback type="invalid">A name is required!</Form.Control.Feedback>
+          </Form.Group>
 
-        <Form.Group>
-          <Form.Label htmlFor="description">Group Description</Form.Label>
-          <Form.Control type="text" placeholder="What's this group all about!" name="description" onChange={handleInputChange} value={groupFormData.description} required />
-          <Form.Control.Feedback type="invalid">A description is required!</Form.Control.Feedback>
-        </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor="description">Group Description</Form.Label>
+            <Form.Control type="text" placeholder="What's this group all about!" name="description" onChange={handleInputChange} value={groupFormData.description} required />
+            <Form.Control.Feedback type="invalid">A description is required!</Form.Control.Feedback>
+          </Form.Group>
 
-        <Form.Group>
-          <Form.Label htmlFor="joincode">Join Code</Form.Label>
-          <Form.Control type="text" placeholder="Create a code to share this group" name="joincode" onChange={handleInputChange} value={groupFormData.joincode} required />
-          <Form.Control.Feedback type="invalid">A description join code is required!</Form.Control.Feedback>
-        </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor="joincode">Join Code</Form.Label>
+            <Form.Control type="text" placeholder="Create a code to share this group" name="joincode" onChange={handleInputChange} value={groupFormData.joincode} required />
+            <Form.Control.Feedback type="invalid">A description join code is required!</Form.Control.Feedback>
+          </Form.Group>
 
-        <Button disabled={!(groupFormData.groupname && groupFormData.description)} type="submit" variant="success">
-          Create
-        </Button>
-      </Form>
+          <Button disabled={!(groupFormData.groupname && groupFormData.description)} type="submit" variant="success">
+            Create
+          </Button>
+        </Form>
+      </Container>
     </>
   );
 };
 
+// The users list of groups on the Profile Page
 const UserGroupList = () => {
   const { loading: loadingMe, data: dataMe } = useQuery(QUERY_ME);
   const userData = dataMe?.me || [];
@@ -135,7 +137,6 @@ const UserGroupList = () => {
     }
 
     const id = group._id;
-    console.log("id", id);
 
     try {
       const { data } = await removeGroup({
@@ -149,28 +150,112 @@ const UserGroupList = () => {
 
   return (
     <>
-      <h2>{myGroups.length ? `My groups:` : "You do not have any groups"}</h2>
-      <Row>
-        {myGroups.map((group) => {
-          return (
-            <Col lg={3} key={group._id}>
-              <Card border="dark" style={{ marginBottom: "2rem" }}>
-                <Card.Body className="d-grid gap-2">
-                  <Card.Title>{group.groupname}</Card.Title>
-                  <Card.Text>{group.description}</Card.Text>
-                  <Card.Text>join code: {group.joincode}</Card.Text>
-                  <Link to={`../GroupPage/${group._id}`}>Go To Group</Link>
-                  <Button className="btn-danger" onClick={() => handleDeleteUserGroup(group)}>
-                    Delete
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          );
-        })}
-      </Row>
+      <Container>
+        <h2>{myGroups.length ? `My groups:` : "You do not have any groups"}</h2>
+        <Row>
+          {myGroups.map((group) => {
+            return (
+              <Col lg={3} key={group._id}>
+                <Card border="dark" style={{ marginBottom: "2rem" }}>
+                  <Card.Body className="d-grid gap-2">
+                    <Card.Title>{group.groupname}</Card.Title>
+                    <Card.Text>{group.description}</Card.Text>
+                    <Card.Text>join code: {group.joincode}</Card.Text>
+                    <Link to={`../GroupPage/${group._id}`}>Go To Group</Link>
+                    <Button className="btn-danger" onClick={() => handleDeleteUserGroup(group)}>
+                      Delete
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>
+      </Container>
     </>
   );
 };
 
-export { CreateGroupForm, UserGroupList };
+// The group list of movies on the GroupPage
+const GroupMovieList = () => {
+  const [removeMovieFromGroup, { error }] = useMutation(REMOVE_MOVIE_FROM_GROUP);
+  const { loading, data, refetch } = useQuery(QUERY_GROUP);
+  const groupData = data?.group || [];
+
+  const { _id } = useParams();
+
+  const thisGroupId = _id;
+  console.log("thisGroupId", thisGroupId);
+
+  console.log("groupData", groupData);
+
+  const thisGroupDataArray = groupData?.filter((group) => group._id.includes(thisGroupId) == true);
+
+  console.log("thisGroupDataArray", thisGroupDataArray);
+
+  const thisGroupData = thisGroupDataArray[0];
+
+  console.log("thisGroupData", thisGroupData);
+
+  const thisGroupDataMovieArray = thisGroupData?.movies;
+
+  console.log("thisGroupDataMovieArray", thisGroupDataMovieArray);
+
+  const handleDeleteGroupMovie = async (movie) => {
+    // get token
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      window.location.replace("/LoginSignup");
+    }
+
+    const movieData = { dddId: movie.dddId };
+
+    const id = String(thisGroupId);
+
+    console.log("id", id);
+
+    try {
+      const { data } = await removeMovieFromGroup({
+        variables: {
+          id: id,
+          movieData: movieData,
+        },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    refetch();
+
+    console.log("Delete button was pressed.");
+  };
+
+  return (
+    <>
+      <Container>
+        <h2>{thisGroupDataMovieArray?.length ? `Group's movies:` : "This group has no saved movies"}</h2>
+        <Row>
+          {thisGroupDataMovieArray?.map((movie) => {
+            return (
+              <Col lg={3} key={movie.title}>
+                <Card border="dark" style={{ marginBottom: "2rem" }}>
+                  <Card.Img variant="top" src={movie.posterImage} alt={`The movie poster ${movie.title}`} />
+                  <Card.Body className="d-grid gap-2">
+                    <Button style={{ marginBottom: "1rem", marginTop: "1rem" }} href={`../Movies/MovieDetails/${movie.dddId}`}>
+                      View Movie Details
+                    </Button>
+                    <Button className="btn-danger" onClick={() => handleDeleteGroupMovie(movie)}>
+                      Delete
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>
+      </Container>
+    </>
+  );
+};
+
+export { CreateGroupForm, UserGroupList, GroupMovieList };

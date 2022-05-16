@@ -101,3 +101,11 @@ export const SAVE_USER_MOVIE_TO_GROUP = gql`
     }
   }
 `;
+
+export const REMOVE_MOVIE_FROM_GROUP = gql`
+  mutation removeMovieFromGroup($id: String, $movieData: MovieInput) {
+    removeMovieFromGroup(_id: $id, movieData: $movieData) {
+      groupname
+    }
+  }
+`;

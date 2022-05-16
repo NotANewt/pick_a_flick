@@ -69,6 +69,7 @@ const typeDefs = gql`
     addGroup(joincode: String, admin: String, users: [String], groupname: String, description: String): Group
     removeGroup(_id: String): Group
     saveUserMovieToGroup(_id: String, movieData: MovieInput): Group
+    removeMovieFromGroup(_id: String, movieData: MovieInput): Group
   }
 `;
 
