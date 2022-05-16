@@ -104,10 +104,8 @@ const UserMovieListForGroup = (props) => {
     try {
       const { data } = await saveUserMovieToGroup({
         variables: {
-          _id: "628178181e4ac9df6683f7db",
-          movieData: {
-            title: "button click test",
-          },
+          id: id,
+          movieData: movieData,
         },
       });
       console.log(data);

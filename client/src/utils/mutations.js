@@ -92,9 +92,12 @@ export const REMOVE_GROUP = gql`
 `;
 
 export const SAVE_USER_MOVIE_TO_GROUP = gql`
-  mutation saveUserMovieToGroup($movieData: MovieInput) {
-    saveUserMovieToGroup(movieData: $movieData) {
+  mutation saveUserMovieToGroup($id: String, $movieData: MovieInput) {
+    saveUserMovieToGroup(_id: $id, movieData: $movieData) {
       groupname
+      movies {
+        title
+      }
     }
   }
 `;
