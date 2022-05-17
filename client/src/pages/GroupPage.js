@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Navigate, Link } from "react-router-dom";
 import { Container, Col, Row, Image, Form, Button, Badge } from "react-bootstrap";
 
-import { UserMovieListForGroup } from "../components/UserMovies";
-import { GroupMovieList } from "../components/Groups";
+import { GroupMovieList, UserMovieListForGroup } from "../components/Groups";
 
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME, QUERY_GROUP, QUERY_USER } from "../utils/queries";

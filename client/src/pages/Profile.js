@@ -1,5 +1,5 @@
 import { DealbreakerList } from "../components/Dealbreakers";
-import { UserMovieList } from "../components/UserMovies";
+import UserMovieList from "../components/UserMovies";
 import { CreateGroupForm, UserGroupList } from "../components/Groups";
 
 import { Container } from "react-bootstrap";
