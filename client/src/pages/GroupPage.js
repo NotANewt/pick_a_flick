@@ -7,12 +7,16 @@ import { GroupMovieList } from "../components/Groups";
 
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME, QUERY_GROUP } from "../utils/queries";
+import { ADD_USER_TO_GROUP } from "../utils/mutations";
 
 function GroupPage() {
   // useParams to get the group id number
   const { _id } = useParams();
 
   const thisGroupId = _id;
+
+  // mutation to save a user to a group
+  const [addUserToGroup, { error }] = useMutation(ADD_USER_TO_GROUP);
 
   // query the user to get favorite movies and dealbreakers
   const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
@@ -27,7 +31,7 @@ function GroupPage() {
 
   const thisGroupData = thisGroupDataArray[0];
 
-  const handleJoinGroup = (e) => {
+  const handleJoinGroup = async (e) => {
     e.preventDefault();
     const thisGroupJoinCode = thisGroupData.joincode;
     const userProvidedJoinCode = document.getElementById("joincode").value;
@@ -37,6 +41,24 @@ function GroupPage() {
 
     if (thisGroupJoinCode == userProvidedJoinCode) {
       console.log("joining group");
+
+      const id = String(thisGroupId);
+      const user = userData._id;
+
+      try {
+        const { data } = await addUserToGroup({
+          variables: {
+            id: id,
+            user: user,
+          },
+        });
+        console.log(data);
+      } catch (err) {
+        console.error(err);
+      }
+      refetch();
+      // TODO: re organize code so the group's movie list refetches when a movie is saved to it
+      location.reload();
     } else {
       console.log("wrong join code");
     }
