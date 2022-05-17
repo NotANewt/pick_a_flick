@@ -22,7 +22,7 @@ function MovieDetails() {
     },
   });
 
-  const userData = dataMe?.me || {};
+  const userData = dataMe?.me || [];
 
   // create state for holding returned doesthedogdie api data
   const [searchedMovieDetails, setSearchedMovieDetails] = useState([]);
@@ -129,8 +129,14 @@ function MovieDetails() {
     refetch();
   };
 
+  console.log("userData.movies", userData.movies);
+  console.log("searchedMovieDetails", searchedMovieDetails?.dddId);
+
+  const searchedMovieDetailsdddId = searchedMovieDetails?.dddId;
+  console.log("searchedMovieDetailsdddId", searchedMovieDetailsdddId);
+
   // check if the movie has already been added to the user
-  const filteredMovies = userData.movies?.filter((movie) => searchedMovieDetails.title?.includes(movie.title));
+  const filteredMovies = userData?.movies?.filter((movie) => searchedMovieDetailsdddId == movie.dddId);
   const hasMovie = filteredMovies?.length > 0;
 
   // set variables that will be used in the return
