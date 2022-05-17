@@ -6,7 +6,7 @@ import { UserMovieListForGroup } from "../components/UserMovies";
 import { GroupMovieList } from "../components/Groups";
 
 import { useMutation, useQuery } from "@apollo/client";
-import { QUERY_ME, QUERY_GROUP } from "../utils/queries";
+import { QUERY_ME, QUERY_GROUP, QUERY_USER } from "../utils/queries";
 import { ADD_USER_TO_GROUP } from "../utils/mutations";
 
 function GroupPage() {
@@ -20,8 +20,13 @@ function GroupPage() {
 
   // query the user to get favorite movies and dealbreakers
   const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
+  const { loading: loadingUsers, data: dataUsers } = useQuery(QUERY_USER);
 
   const userData = dataMe?.me || [];
+
+  const allUserData = dataUsers?.user || [];
+
+  console.log("allUserData", allUserData);
 
   // query group to get the data for this group by id
   const { loading, data } = useQuery(QUERY_GROUP);
@@ -31,17 +36,30 @@ function GroupPage() {
 
   const thisGroupData = thisGroupDataArray[0];
 
+  // query Group and Users
+
+  const groupUserIds = thisGroupData?.users;
+  const userDBData = allUserData;
+
+  let groupUsers = [];
+  let groupDealbreakers = [];
+
+  // TODO: ask Scott how to query the database for users that are part of an array
+  if (userDBData.length > 0) {
+    userDBData.forEach((u) => {
+      if (groupUserIds?.includes(u._id)) {
+        groupUsers.push(u);
+        groupDealbreakers = groupDealbreakers.concat(u.dealbreakers);
+      }
+    });
+  }
+
   const handleJoinGroup = async (e) => {
     e.preventDefault();
     const thisGroupJoinCode = thisGroupData.joincode;
     const userProvidedJoinCode = document.getElementById("joincode").value;
 
-    console.log("thisGroupJoinCode", thisGroupJoinCode);
-    console.log("userProvidedJoinCode", userProvidedJoinCode);
-
     if (thisGroupJoinCode == userProvidedJoinCode) {
-      console.log("joining group");
-
       const id = String(thisGroupId);
       const user = userData._id;
 

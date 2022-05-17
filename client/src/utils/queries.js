@@ -52,3 +52,24 @@ export const QUERY_GROUP = gql`
     }
   }
 `;
+
+export const QUERY_USER = gql`
+  query user {
+    user {
+      _id
+      username
+      email
+      dealbreakers
+      movies {
+        dddId
+        movieDbId
+        title
+        year
+        genre
+        overview
+        posterImage
+        dealbreakers
+      }
+    }
+  }
+`;

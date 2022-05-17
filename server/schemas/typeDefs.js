@@ -57,6 +57,7 @@ const typeDefs = gql`
     me: User
     dealbreaker: [Dealbreaker]
     group: [Group]
+    user: [User]
   }
 
   type Mutation {

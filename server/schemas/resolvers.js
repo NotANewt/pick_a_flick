@@ -19,6 +19,9 @@ const resolvers = {
     group: async () => {
       return Group.find({});
     },
+    user: async () => {
+      return User.find({});
+    },
   },
 
   Mutation: {
