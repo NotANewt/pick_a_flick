@@ -7,7 +7,7 @@ import { GroupMovieList } from "../components/Groups";
 
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME, QUERY_GROUP, QUERY_USER } from "../utils/queries";
-import { ADD_USER_TO_GROUP } from "../utils/mutations";
+import { ADD_USER_TO_GROUP, REMOVE_MOVIE_FROM_GROUP } from "../utils/mutations";
 
 function GroupPage() {
   // useParams to get the group id number
@@ -17,6 +17,8 @@ function GroupPage() {
 
   // mutation to save a user to a group
   const [addUserToGroup, { error }] = useMutation(ADD_USER_TO_GROUP);
+
+  const [removeMovieFromGroup, { error: removeMovieError }] = useMutation(REMOVE_MOVIE_FROM_GROUP);
 
   // query the user to get favorite movies and dealbreakers
   const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
@@ -54,6 +56,54 @@ function GroupPage() {
     });
   }
 
+  const handleRemoveMoviesWithDealbreakers = () => {
+    console.log("thisGroupData.movies", thisGroupData.movies);
+    thisGroupData?.movies.forEach(async (movie) => {
+      let foundDealbreaker = 0;
+
+      groupDealbreakers.forEach((d) => {
+        foundDealbreaker = foundDealbreaker + movie.dealbreakers.includes(d);
+      });
+      if (foundDealbreaker > 0) {
+        console.log("deleting movie", movie.title);
+
+        const movieData = { dddId: movie.dddId };
+
+        const id = String(thisGroupId);
+
+        const { data } = await removeMovieFromGroup({
+          variables: {
+            id: id,
+            movieData: movieData,
+          },
+        });
+      }
+    });
+    location.reload();
+  };
+
+  const handlePickAFlick = () => {
+    let pickedMovie = thisGroupData.movies[Math.floor(Math.random() * thisGroupData.movies.length)];
+    console.log("pickedMovie", pickedMovie);
+
+    thisGroupData.movies.forEach(async (movie) => {
+      if (movie.dddId != pickedMovie.dddId) {
+        const movieData = { dddId: movie.dddId };
+
+        const id = String(thisGroupId);
+
+        const { data } = await removeMovieFromGroup({
+          variables: {
+            id: id,
+            movieData: movieData,
+          },
+        });
+      }
+    });
+    // TODO: fix the refetch
+    alert(`Your movie is ${pickedMovie.title}!`);
+  };
+
   const handleJoinGroup = async (e) => {
     e.preventDefault();
     const thisGroupJoinCode = thisGroupData.joincode;
@@ -89,6 +139,8 @@ function GroupPage() {
           <h2>Welcome to {thisGroupData?.groupname}</h2>
           <p>{thisGroupData?.description}</p>
           <GroupMovieList />
+          <Button onClick={() => handleRemoveMoviesWithDealbreakers()}>Remove Movies with Dealbreakers</Button>
+          <Button onClick={() => handlePickAFlick()}>Pick A Flick!</Button>
           <UserMovieListForGroup thisGroupId={thisGroupId} />
         </Container>
       </>
