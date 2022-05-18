@@ -99,6 +99,16 @@ function GroupPage() {
   };
 
   const handleAddMovieToGroup = async (movie) => {
+    let isInGroup = false;
+    groupDBData.movies.forEach((groupMovie) => {
+      if (groupMovie.dddId == movie.dddId) {
+        console.log("this movie is already in this group");
+        isInGroup = true;
+      }
+    });
+
+    if (isInGroup) return false;
+
     const id = String(paramsGroupId);
     const movieData = {
       dddId: movie.dddId,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Col, Row, Image, Form, Button, Badge } from "react-bootstrap";
+import { Container, Col, Row, Image, Form, Button, Badge, Spinner } from "react-bootstrap";
 import { useParams, Navigate, Link } from "react-router-dom";
 
 import { useMutation, useQuery } from "@apollo/client";
@@ -142,6 +142,18 @@ function MovieDetails() {
   // set variables that will be used in the return
   let theBadgeBg = "dark";
   let foundDealbreaker = false;
+
+  if (!searchedMovieDetails.title) {
+    return (
+      <>
+        <Container>
+          <center>
+            <Spinner animation="border"></Spinner> Loading Movie
+          </center>
+        </Container>
+      </>
+    );
+  }
 
   return (
     <>

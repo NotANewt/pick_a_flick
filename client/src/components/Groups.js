@@ -15,7 +15,7 @@ const GroupMovieList = (props) => {
   return (
     <>
       <Container>
-        <h2>{props.movies?.length ? `Group's movies:` : "This group has no saved movies"}</h2>
+        <h2>{props.movies?.length ? `Group's movies:` : "This group has no movies."}</h2>
         <Row>
           {props.movies?.map((movie) => {
             return (
@@ -47,7 +47,7 @@ const GroupUserMovieList = (props) => {
   return (
     <>
       <Container>
-        <h2>{props.movies?.length ? `Group's movies:` : "This group has no saved movies"}</h2>
+        <h2>{props.movies?.length ? `Your movies:` : "You have no saved movies to add to this group."}</h2>
         <Row>
           {props.movies?.map((movie) => {
             return (
