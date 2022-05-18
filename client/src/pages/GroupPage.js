@@ -8,8 +8,6 @@ import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME, QUERY_GROUP, QUERY_USER } from "../utils/queries";
 import { ADD_USER_TO_GROUP, REMOVE_MOVIE_FROM_GROUP, SAVE_USER_MOVIE_TO_GROUP } from "../utils/mutations";
 
-// ###### NEW STUFF ######
-
 function getDealbreakersFromGroupUsers(userDBData, groupUserIds) {
   let outputGroupDealbreakers = [];
   // Loop through the users to find users who are in thius group and then grab their dealbreakers to output in a concat array
@@ -182,7 +180,5 @@ function GroupPage() {
       </>
     );
   }
-
-  // ##########
 }
 export default GroupPage;

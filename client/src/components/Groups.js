@@ -8,8 +8,6 @@ import { QUERY_ME, QUERY_GROUP } from "../utils/queries";
 
 import Auth from "../utils/auth";
 
-// ###### NEW COMPONENT ######
-
 const GroupMovieList = (props) => {
   const handleDeleteGroupMovie = (movieId) => {
     props.handleRemoveMovie(movieId);
@@ -74,10 +72,8 @@ const GroupUserMovieList = (props) => {
   );
 };
 
-// ###### OLD COMPONENT ######
-
 // The create a group form on the Profile Page
-const CreateGroupForm = () => {
+const CreateGroupForm = (props) => {
   const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
 
   const userData = dataMe?.me || [];
@@ -96,16 +92,6 @@ const CreateGroupForm = () => {
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
-  const [addGroup, { error }] = useMutation(ADD_GROUP);
-
-  useEffect(() => {
-    if (error) {
-      setShowAlert(true);
-    } else {
-      setShowAlert(false);
-    }
-  }, [error]);
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setGroupFormData({ ...groupFormData, [name]: value });
@@ -121,17 +107,7 @@ const CreateGroupForm = () => {
       event.stopPropagation();
     }
 
-    try {
-      groupFormData.admin = userData._id;
-      groupFormData.users = userData._id;
-
-      const { data } = await addGroup({
-        variables: { ...groupFormData },
-      });
-      console.log(data);
-    } catch (err) {
-      console.error(err);
-    }
+    props.handleCreateGroup(groupFormData);
 
     setGroupFormData({
       groupname: "",
@@ -182,46 +158,19 @@ const CreateGroupForm = () => {
 };
 
 // The users list of groups on the Profile Page
-const UserGroupList = () => {
-  const { loading: loadingMe, data: dataMe } = useQuery(QUERY_ME);
-  const userData = dataMe?.me || [];
-
-  const userId = userData._id;
-
-  const { loading, data, refetch } = useQuery(QUERY_GROUP);
-  const groupData = data?.group || [];
-
-  const myGroups = groupData?.filter((group) => group.users.includes(userId) == true);
-
-  const [removeGroup, { error: errorRemove }] = useMutation(REMOVE_GROUP);
-
+const UserGroupList = (props) => {
   //handle user clicking button to delete a group
   const handleDeleteUserGroup = async (group) => {
-    // get token
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    if (!token) {
-      window.location.replace("/LoginSignup");
-    }
-
     const id = group._id;
-
-    try {
-      const { data } = await removeGroup({
-        variables: { id: id },
-      });
-    } catch (err) {
-      console.error(err);
-    }
-    refetch();
+    props.handleDeleteGroup(id);
   };
 
   return (
     <>
       <Container>
-        <h2>{myGroups.length ? `My groups:` : "You do not have any groups"}</h2>
+        <h2>{props.myGroups.length ? `My groups:` : "You do not have any groups"}</h2>
         <Row>
-          {myGroups.map((group) => {
+          {props.myGroups.map((group) => {
             return (
               <Col lg={3} key={group._id}>
                 <Card border="dark" style={{ marginBottom: "2rem" }}>
