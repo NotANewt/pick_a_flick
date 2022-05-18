@@ -2,115 +2,72 @@ import React, { useState, useEffect } from "react";
 import { useParams, Navigate, Link } from "react-router-dom";
 import { Container, Col, Row, Image, Form, Button, Badge } from "react-bootstrap";
 
-import { GroupMovieList, UserMovieListForGroup } from "../components/Groups";
+import { GroupMovieList, GroupUserMovieList } from "../components/Groups";
 
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME, QUERY_GROUP, QUERY_USER } from "../utils/queries";
-import { ADD_USER_TO_GROUP, REMOVE_MOVIE_FROM_GROUP } from "../utils/mutations";
+import { ADD_USER_TO_GROUP, REMOVE_MOVIE_FROM_GROUP, SAVE_USER_MOVIE_TO_GROUP } from "../utils/mutations";
 
-function GroupPage() {
-  // useParams to get the group id number
-  const { _id } = useParams();
+// ###### NEW STUFF ######
 
-  const thisGroupId = _id;
-
-  // mutation to save a user to a group
-  const [addUserToGroup, { error }] = useMutation(ADD_USER_TO_GROUP);
-
-  const [removeMovieFromGroup, { error: removeMovieError }] = useMutation(REMOVE_MOVIE_FROM_GROUP);
-
-  // query the user to get favorite movies and dealbreakers
-  const { loading: loadingMe, data: dataMe, refetch } = useQuery(QUERY_ME);
-  const { loading: loadingUsers, data: dataUsers } = useQuery(QUERY_USER);
-
-  const userData = dataMe?.me || [];
-
-  const allUserData = dataUsers?.user || [];
-
-  console.log("allUserData", allUserData);
-
-  // query group to get the data for this group by id
-  const { loading, data } = useQuery(QUERY_GROUP);
-  const groupData = data?.group || [];
-
-  const thisGroupDataArray = groupData?.filter((group) => group._id.includes(thisGroupId) == true);
-
-  const thisGroupData = thisGroupDataArray[0];
-
-  // query Group and Users
-
-  const groupUserIds = thisGroupData?.users;
-  const userDBData = allUserData;
-
-  let groupUsers = [];
-  let groupDealbreakers = [];
-
-  // TODO: ask Scott how to query the database for users that are part of an array
+function getDealbreakersFromGroupUsers(userDBData, groupUserIds) {
+  let outputGroupDealbreakers = [];
+  // Loop through the users to find users who are in thius group and then grab their dealbreakers to output in a concat array
   if (userDBData.length > 0) {
     userDBData.forEach((u) => {
       if (groupUserIds?.includes(u._id)) {
-        groupUsers.push(u);
-        groupDealbreakers = groupDealbreakers.concat(u.dealbreakers);
+        outputGroupDealbreakers = outputGroupDealbreakers.concat(u.dealbreakers);
       }
     });
   }
+  return outputGroupDealbreakers;
+}
 
-  const handleRemoveMoviesWithDealbreakers = () => {
-    console.log("thisGroupData.movies", thisGroupData.movies);
-    thisGroupData?.movies.forEach(async (movie) => {
-      let foundDealbreaker = 0;
+function pickAFlick(groupDBData) {
+  return groupDBData.movies[Math.floor(Math.random() * groupDBData.movies.length)];
+}
 
-      groupDealbreakers.forEach((d) => {
-        foundDealbreaker = foundDealbreaker + movie.dealbreakers.includes(d);
-      });
-      if (foundDealbreaker > 0) {
-        console.log("deleting movie", movie.title);
+function GroupPage() {
+  const { _id } = useParams();
+  const paramsGroupId = _id;
 
-        const movieData = { dddId: movie.dddId };
+  // User will be added to group if they correctly fill out the group joincode
+  const [addUserToGroup, { error: addUserToGroupError }] = useMutation(ADD_USER_TO_GROUP);
+  // Admin, Users and Pick Action can all remove movies fro the group on this page
+  const [removeMovieFromGroup, { error: removeMovieFromGroupError }] = useMutation(REMOVE_MOVIE_FROM_GROUP);
+  const [saveUserMovieToGroup, { error: errorSave }] = useMutation(SAVE_USER_MOVIE_TO_GROUP);
 
-        const id = String(thisGroupId);
+  // query the user to get the userData
+  const { loading: loadingMe, data: dataMe } = useQuery(QUERY_ME);
+  const meDBData = dataMe?.me || [];
+  if (!loadingMe) console.log("loaded me data");
 
-        const { data } = await removeMovieFromGroup({
-          variables: {
-            id: id,
-            movieData: movieData,
-          },
-        });
-      }
-    });
-    location.reload();
-  };
+  // We got to get everybody right now - I'll fix this in post (TODO: query only users who belong to group)
+  const { loading: loadingUsers, data: dataUsers } = useQuery(QUERY_USER);
+  const usersDBData = dataUsers?.user || [];
+  if (!loadingUsers) console.log("loaded user data");
 
-  const handlePickAFlick = () => {
-    let pickedMovie = thisGroupData.movies[Math.floor(Math.random() * thisGroupData.movies.length)];
-    console.log("pickedMovie", pickedMovie);
+  // query EVERY group (TODO lets just get the one group yeah?) once we fix this we wont need to filer our data below
+  const { loading: loadingGroup, data: dataGroup, refetch } = useQuery(QUERY_GROUP);
+  const groupTempData = dataGroup?.group.filter((group) => group._id.includes(paramsGroupId) == true) || [];
+  //TEMP FIX
+  const groupDBData = groupTempData[0];
 
-    thisGroupData.movies.forEach(async (movie) => {
-      if (movie.dddId != pickedMovie.dddId) {
-        const movieData = { dddId: movie.dddId };
+  if (!loadingGroup) console.log("loaded group data");
+  // TODO: ask Scott how to query the database for users that are part of an array
+  let groupDealbreakers = getDealbreakersFromGroupUsers(usersDBData, groupDBData?.users);
 
-        const id = String(thisGroupId);
-
-        const { data } = await removeMovieFromGroup({
-          variables: {
-            id: id,
-            movieData: movieData,
-          },
-        });
-      }
-    });
-    // TODO: fix the refetch
-    alert(`Your movie is ${pickedMovie.title}!`);
-  };
-
-  const handleJoinGroup = async (e) => {
+  const handleJoinGroupForm = (e) => {
     e.preventDefault();
-    const thisGroupJoinCode = thisGroupData.joincode;
-    const userProvidedJoinCode = document.getElementById("joincode").value;
+    const joinCode = document.getElementById("joincode").value;
+    handleJoinGroup(joinCode);
+  };
 
-    if (thisGroupJoinCode == userProvidedJoinCode) {
-      const id = String(thisGroupId);
-      const user = userData._id;
+  // Function to handle when a user tries to join a group with a join code
+  const handleJoinGroup = async (joinCode) => {
+    if (joinCode === groupDBData.joincode) {
+      const id = String(paramsGroupId);
+      const user = meDBData._id;
 
       try {
         const { data } = await addUserToGroup({
@@ -119,28 +76,96 @@ function GroupPage() {
             user: user,
           },
         });
-        console.log(data);
       } catch (err) {
         console.error(err);
       }
+      //TODO make the page load with a refetc
       refetch();
-      // TODO: re organize code so the group's movie list refetches when a movie is saved to it
-      location.reload();
     } else {
       console.log("wrong join code");
     }
   };
 
-  if (thisGroupData?.users.includes(userData._id)) {
+  const handleRemoveMovieFromGroup = async (movieID) => {
+    const movieData = { dddId: movieID };
+    const id = String(paramsGroupId);
+    //Remove the movie!
+    const { data } = await removeMovieFromGroup({
+      variables: {
+        id: id,
+        movieData: movieData,
+      },
+    });
+    //TODO lets get this working
+    refetch();
+  };
+
+  const handleAddMovieToGroup = async (movie) => {
+    const id = String(paramsGroupId);
+    const movieData = {
+      dddId: movie.dddId,
+      movieDbId: movie.movieDbId,
+      title: movie.title,
+      year: movie.year,
+      genre: movie.genre,
+      overview: movie.overview,
+      posterImage: movie.posterImage,
+      dealbreakers: movie.dealbreakers,
+    };
+
+    const { data } = await saveUserMovieToGroup({
+      variables: {
+        id: id,
+        movieData: movieData,
+      },
+    });
+
+    refetch();
+  };
+
+  // Function to handle the removing of amovies with dealbreakers from our group
+  const handleRemoveMoviesWithDealbreakers = () => {
+    //loop through the groups movies
+    groupDBData?.movies.forEach(async (movie) => {
+      //set out deabreaker flag to 0
+      let foundDealbreaker = 0;
+
+      // Loop through the dealbreakers
+      groupDealbreakers.forEach((dealbreaker) => {
+        // if the dealbreaker exists on a movie increment our flag (use boolean as int)
+        foundDealbreaker = foundDealbreaker + movie.dealbreakers.includes(dealbreaker);
+      });
+
+      // if we found any dealberakers lets remove the movie from the group!
+      if (foundDealbreaker > 0) {
+        handleRemoveMovieFromGroup(movie.dddId);
+      }
+    });
+  };
+
+  // PICKING OUR FINAL FLIC!
+  const handlePickAFlick = () => {
+    const pickedMovie = pickAFlick(groupDBData);
+
+    // Delete the rest of these losers
+    groupDBData.movies.forEach(async (movie) => {
+      if (movie.dddId != pickedMovie.dddId) {
+        handleRemoveMovieFromGroup(movie.dddId);
+      }
+    });
+  };
+
+  // If you aer part of this group
+  if (groupDBData?.users.includes(meDBData._id)) {
     return (
       <>
         <Container>
-          <h2>Welcome to {thisGroupData?.groupname}</h2>
-          <p>{thisGroupData?.description}</p>
-          <GroupMovieList />
+          <h2>Welcome to {groupDBData.groupname}</h2>
+          <p>{groupDBData.description}</p>
+          <GroupMovieList movies={groupDBData.movies} handleRemoveMovie={handleRemoveMovieFromGroup} />
           <Button onClick={() => handleRemoveMoviesWithDealbreakers()}>Remove Movies with Dealbreakers</Button>
           <Button onClick={() => handlePickAFlick()}>Pick A Flick!</Button>
-          <UserMovieListForGroup thisGroupId={thisGroupId} />
+          <GroupUserMovieList movies={meDBData.movies} handleAddMovie={handleAddMovieToGroup} />
         </Container>
       </>
     );
@@ -148,7 +173,7 @@ function GroupPage() {
     return (
       <>
         <h2>Join Group Form</h2>
-        <Form onSubmit={handleJoinGroup}>
+        <Form onSubmit={handleJoinGroupForm}>
           <Form.Group>
             <Form.Control type="text" placeholder="join code" id="joincode"></Form.Control>
             <Button type="submit">Join Group</Button>
@@ -157,5 +182,7 @@ function GroupPage() {
       </>
     );
   }
+
+  // ##########
 }
 export default GroupPage;
