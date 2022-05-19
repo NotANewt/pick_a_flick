@@ -43,13 +43,10 @@ function Profile(props) {
     refetchGroup();
   };
 
-  // delete a movie
-
-  // delete a dealbreaker
-
   return (
     <>
       <Container>
+        <h2>Welcome, {meDBData.username}</h2>
         <DealbreakerList />
         <UserMovieList />
         <CreateGroupForm handleCreateGroup={handleProfileCreateGroup} />

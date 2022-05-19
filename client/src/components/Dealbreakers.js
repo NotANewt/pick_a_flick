@@ -48,7 +48,7 @@ const Dealbreaker = (props) => {
 const DealbreakerList = (props) => {
   const { loading: loadingMe, data: dataMe } = useQuery(QUERY_ME);
 
-  const userData = dataMe?.me || {};
+  const userData = dataMe?.me || [];
 
   if (loadingMe) {
     return <h2>LOADING SAVED DEALBREAKERS...</h2>;

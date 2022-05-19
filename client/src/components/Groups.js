@@ -14,28 +14,32 @@ const GroupMovieList = (props) => {
   };
   return (
     <>
-      <Container>
-        <h2>{props.movies?.length ? `Group's movies:` : "This group has no movies."}</h2>
-        <Row>
-          {props.movies?.map((movie) => {
-            return (
-              <Col lg={3} key={movie.title}>
-                <Card border="dark" style={{ marginBottom: "2rem" }}>
-                  <Card.Img variant="top" src={movie.posterImage} alt={`The movie poster ${movie.title}`} />
-                  <Card.Body className="d-grid gap-2">
-                    <Button style={{ marginBottom: "1rem", marginTop: "1rem" }} href={`../Movies/MovieDetails/${movie.dddId}`}>
-                      View Movie Details
-                    </Button>
-                    <Button className="btn-danger" onClick={() => handleDeleteGroupMovie(movie.dddId)}>
-                      Delete
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      </Container>
+      <Card>
+        <Card.Body>
+          <Card.Title>{props.movies?.length ? `Group's movies:` : "This group has no movies."}</Card.Title>
+          <Row>
+            {props.movies?.map((movie) => {
+              return (
+                <Col lg={3} key={movie.title}>
+                  <Card border="dark" style={{ marginBottom: "2rem" }}>
+                    <Card.Img variant="top" src={movie.posterImage} alt={`The movie poster ${movie.title}`} />
+                    <Card.Body className="d-grid gap-2">
+                      <div className="mx-auto">
+                        <Button variant="outline-primary" style={{ marginRight: "2rem", marginBottom: "1rem", marginTop: "1rem", fontSize: "12px" }} href={`../Movies/MovieDetails/${movie.dddId}`}>
+                          Movie Details
+                        </Button>
+                        <Button variant="outline-danger" style={{ marginBottom: "1rem", marginTop: "1rem", fontSize: "12px" }} onClick={() => handleDeleteGroupMovie(movie.dddId)}>
+                          Remove
+                        </Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+            })}
+          </Row>
+        </Card.Body>
+      </Card>
     </>
   );
 };
@@ -46,28 +50,32 @@ const GroupUserMovieList = (props) => {
   };
   return (
     <>
-      <Container>
-        <h2>{props.movies?.length ? `Your movies:` : "You have no saved movies to add to this group."}</h2>
-        <Row>
-          {props.movies?.map((movie) => {
-            return (
-              <Col lg={3} key={movie.title}>
-                <Card border="dark" style={{ marginBottom: "2rem" }}>
-                  <Card.Img variant="top" src={movie.posterImage} alt={`The movie poster ${movie.title}`} />
-                  <Card.Body className="d-grid gap-2">
-                    <Button style={{ marginBottom: "1rem", marginTop: "1rem" }} href={`../Movies/MovieDetails/${movie.dddId}`}>
-                      View Movie Details
-                    </Button>
-                    <Button className="btn-success" onClick={() => handleAddUserMovieToGroup(movie)}>
-                      Add Movie
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      </Container>
+      <Card>
+        <Card.Body>
+          <Card.Title>{props.movies?.length ? `Your movies:` : "You have no saved movies to add to this group."}</Card.Title>
+          <Row>
+            {props.movies?.map((movie) => {
+              return (
+                <Col lg={2} key={movie.title}>
+                  <Card border="dark" style={{ marginBottom: "2rem" }}>
+                    <Card.Img variant="top" src={movie.posterImage} alt={`The movie poster ${movie.title}`} />
+                    <Card.Body className="d-grid gap-2 p-0">
+                      <div className="border-top mx-auto">
+                        <Button variant="outline-primary" style={{ marginBottom: "1rem", marginTop: "1rem", marginRight: "1rem", fontSize: "12px" }} href={`../Movies/MovieDetails/${movie.dddId}`}>
+                          Details
+                        </Button>
+                        <Button variant="outline-success" style={{ marginBottom: "1rem", marginTop: "1rem", fontSize: "12px" }} onClick={() => handleAddUserMovieToGroup(movie)}>
+                          Add Movie
+                        </Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+            })}
+          </Row>
+        </Card.Body>
+      </Card>
     </>
   );
 };
@@ -149,7 +157,7 @@ const CreateGroupForm = (props) => {
                 <Form.Control.Feedback type="invalid">A description join code is required!</Form.Control.Feedback>
               </Form.Group>
 
-              <Button disabled={!(groupFormData.groupname && groupFormData.description)} type="submit" variant="success">
+              <Button disabled={!(groupFormData.groupname && groupFormData.description)} type="submit" variant="outline-success">
                 Create
               </Button>
             </Form>

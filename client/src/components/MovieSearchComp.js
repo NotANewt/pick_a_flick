@@ -98,7 +98,7 @@ const MovieSearch = () => {
                   <Form.Control name="searchInput" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} type="text" size="lg" placeholder="Search for a movie" />
                 </Col>
                 <Col xs={12} md={4}>
-                  <Button type="submit" variant="success" size="lg">
+                  <Button type="submit" variant="outline-success" size="lg">
                     Submit Search
                   </Button>
                 </Col>

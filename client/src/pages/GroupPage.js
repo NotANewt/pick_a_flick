@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Navigate, Link } from "react-router-dom";
-import { Container, Col, Row, Image, Form, Button, Badge } from "react-bootstrap";
+import { Container, Card, Col, Row, Image, Form, Button, Badge } from "react-bootstrap";
 
 import { GroupMovieList, GroupUserMovieList } from "../components/Groups";
 
@@ -163,16 +163,32 @@ function GroupPage() {
     });
   };
 
-  // If you aer part of this group
+  // If you are part of this group
   if (groupDBData?.users.includes(meDBData._id)) {
     return (
       <>
         <Container>
-          <h2>Welcome to {groupDBData.groupname}</h2>
-          <p>{groupDBData.description}</p>
+          <Card className="mb-4">
+            <Card.Body>
+              <Card.Title>Welcome to {groupDBData.groupname}</Card.Title>
+              <Card.Text>{groupDBData.description}</Card.Text>
+            </Card.Body>
+          </Card>
           <GroupMovieList movies={groupDBData.movies} handleRemoveMovie={handleRemoveMovieFromGroup} />
-          <Button onClick={() => handleRemoveMoviesWithDealbreakers()}>Remove Movies with Dealbreakers</Button>
-          <Button onClick={() => handlePickAFlick()}>Pick A Flick!</Button>
+
+          <Card className="my-4">
+            <Card.Body className="mx-auto">
+              <div>
+                <Button variant="outline-danger" className="me-4" onClick={() => handleRemoveMoviesWithDealbreakers()}>
+                  Remove Movies with Dealbreakers
+                </Button>
+                <Button variant="outline-success" onClick={() => handlePickAFlick()}>
+                  Pick A Flick!
+                </Button>
+              </div>
+            </Card.Body>
+          </Card>
+
           <GroupUserMovieList movies={meDBData.movies} handleAddMovie={handleAddMovieToGroup} />
         </Container>
       </>
@@ -184,7 +200,9 @@ function GroupPage() {
         <Form onSubmit={handleJoinGroupForm}>
           <Form.Group>
             <Form.Control type="text" placeholder="join code" id="joincode"></Form.Control>
-            <Button type="submit">Join Group</Button>
+            <Button variant="outline-success" type="submit">
+              Join Group
+            </Button>
           </Form.Group>
         </Form>
       </>
