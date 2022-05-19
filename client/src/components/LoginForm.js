@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Alert, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
@@ -7,6 +8,9 @@ import { LOGIN_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 const LoginForm = () => {
+  // TODO: navigate
+  const navigate = useNavigate();
+
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -26,7 +30,7 @@ const LoginForm = () => {
     setUserFormData({ ...userFormData, [name]: value });
   };
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async (event, props) => {
     event.preventDefault();
 
     const form = event.currentTarget;
@@ -39,8 +43,6 @@ const LoginForm = () => {
       const { data } = await login({
         variables: { ...userFormData },
       });
-
-      console.log(data);
       Auth.login(data.login.token);
     } catch (e) {
       console.error(e);
@@ -51,6 +53,9 @@ const LoginForm = () => {
       email: "",
       password: "",
     });
+
+    // TODO: navigate
+    // navigate("/Profile");
   };
 
   return (
