@@ -169,7 +169,7 @@ const Dealbreakers = () => {
               })}
             </Form.Select>
 
-            <Button variant="primary" onClick={() => handleButtonClick()}>
+            <Button variant="outline-success" onClick={() => handleButtonClick()}>
               Save
             </Button>
 
