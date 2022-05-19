@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, ButtonGroup, Row, Col, Stack, Form, Badge } from "react-bootstrap";
+import { Card, Container, Button, ButtonGroup, Row, Col, Stack, Form, Badge } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
 
 import { useQuery, useMutation } from "@apollo/client";
@@ -31,13 +31,13 @@ const Dealbreaker = (props) => {
     refetch();
   };
 
-  // Dealbreaker card with delete button
+  // Dealbreaker button with delete button
   return (
     <ButtonGroup size="sm" className="mb-2, me-2">
-      <Button disabled variant="dark" style={{ textTransform: "capitalize", opacity: 1 }}>
+      <Button className="mt-2" disabled variant="outline-dark" style={{ textTransform: "capitalize", opacity: 1 }}>
         {props.dealbreaker}
       </Button>
-      <Button variant="danger" onClick={() => handleDeleteUserDealbreaker(props.dealbreaker)}>
+      <Button className="mt-2" variant="outline-danger" onClick={() => handleDeleteUserDealbreaker(props.dealbreaker)}>
         Remove
       </Button>
     </ButtonGroup>
@@ -56,10 +56,16 @@ const DealbreakerList = (props) => {
 
   return (
     <>
-      <h2>{userData.dealbreakers.length ? `Saved dealbreakers:` : "You have no saved dealbreakers"}</h2>
-      {userData.dealbreakers?.map((dealbreaker) => {
-        return <Dealbreaker key={dealbreaker} dealbreaker={dealbreaker} />;
-      })}
+      <Container>
+        <Card>
+          <Card.Body>
+            <Card.Title>{userData.dealbreakers.length ? `Here are your dealbreakers.` : "You have no saved dealbreakers."}</Card.Title>
+            {userData.dealbreakers?.map((dealbreaker) => {
+              return <Dealbreaker key={dealbreaker} dealbreaker={dealbreaker} />;
+            })}
+          </Card.Body>
+        </Card>
+      </Container>
     </>
   );
 };

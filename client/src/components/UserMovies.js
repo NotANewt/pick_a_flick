@@ -45,27 +45,33 @@ const UserMovieList = (props) => {
 
   return (
     <>
-      <Container>
-        <h2>{userData.movies.length ? `Saved movies:` : "You have no saved movies"}</h2>
-        <Row>
-          {userData.movies?.map((movie) => {
-            return (
-              <Col lg={3} key={movie.title}>
-                <Card border="dark" style={{ marginBottom: "2rem" }}>
-                  <Card.Img variant="top" src={movie.posterImage} alt={`The movie poster ${movie.title}`} />
-                  <Card.Body className="d-grid gap-2">
-                    <Button style={{ marginBottom: "1rem", marginTop: "1rem" }} href={`../Movies/MovieDetails/${movie.dddId}`}>
-                      View Movie Details
-                    </Button>
-                    <Button className="btn-danger" onClick={() => handleDeleteUserMovie(movie)}>
-                      Delete
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
+      <Container className="mt-4">
+        <Card>
+          <Card.Body>
+            <Card.Title>{userData.movies.length ? `Saved movies:` : "You have no saved movies"}</Card.Title>
+            <Row>
+              {userData.movies?.map((movie) => {
+                return (
+                  <Col lg={2} key={movie.title}>
+                    <Card border="dark" style={{ marginBottom: "2rem" }}>
+                      <Card.Img variant="top" src={movie.posterImage} alt={`The movie poster ${movie.title}`} />
+                      <Card.Body className="d-grid gap-2">
+                        <div className="border-top mx-auto">
+                          <Button variant="outline-primary" style={{ marginBottom: "1rem", marginTop: "1rem", marginRight: "1rem", fontSize: "12px" }} href={`../Movies/MovieDetails/${movie.dddId}`}>
+                            Details
+                          </Button>
+                          <Button variant="outline-danger" style={{ marginBottom: "1rem", marginTop: "1rem", fontSize: "12px" }} onClick={() => handleDeleteUserMovie(movie)}>
+                            Remove
+                          </Button>
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                );
+              })}
+            </Row>
+          </Card.Body>
+        </Card>
       </Container>
     </>
   );

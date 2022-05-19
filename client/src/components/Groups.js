@@ -120,38 +120,41 @@ const CreateGroupForm = (props) => {
 
   return (
     <>
-      <Container>
-        {/* This is needed for the validation functionality */}
-        <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-          {/* show alert if server response is bad */}
-          <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant="danger">
-            Something went wrong with creating your group.
-          </Alert>
+      <Container className="mt-4">
+        <Card>
+          <Card.Body>
+            <Card.Title>Create A New Group</Card.Title>
+            {/* This is needed for the validation functionality */}
+            <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+              {/* show alert if server response is bad */}
+              <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant="danger">
+                Something went wrong with creating your group.
+              </Alert>
 
-          <h2>Create A New Group</h2>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="groupname">Name</Form.Label>
+                <Form.Control type="text" placeholder="Give your movie group a name!" name="groupname" onChange={handleInputChange} value={groupFormData.groupname} required />
+                <Form.Control.Feedback type="invalid">A name is required!</Form.Control.Feedback>
+              </Form.Group>
 
-          <Form.Group>
-            <Form.Label htmlFor="groupname">Group Name</Form.Label>
-            <Form.Control type="text" placeholder="Give your movie group a name!" name="groupname" onChange={handleInputChange} value={groupFormData.groupname} required />
-            <Form.Control.Feedback type="invalid">A name is required!</Form.Control.Feedback>
-          </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="description">Description</Form.Label>
+                <Form.Control type="text" placeholder="What's this group all about?" name="description" onChange={handleInputChange} value={groupFormData.description} required />
+                <Form.Control.Feedback type="invalid">A description is required!</Form.Control.Feedback>
+              </Form.Group>
 
-          <Form.Group>
-            <Form.Label htmlFor="description">Group Description</Form.Label>
-            <Form.Control type="text" placeholder="What's this group all about!" name="description" onChange={handleInputChange} value={groupFormData.description} required />
-            <Form.Control.Feedback type="invalid">A description is required!</Form.Control.Feedback>
-          </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label htmlFor="joincode">Join Code</Form.Label>
+                <Form.Control type="text" placeholder="Create a code to share this group" name="joincode" onChange={handleInputChange} value={groupFormData.joincode} required />
+                <Form.Control.Feedback type="invalid">A description join code is required!</Form.Control.Feedback>
+              </Form.Group>
 
-          <Form.Group>
-            <Form.Label htmlFor="joincode">Join Code</Form.Label>
-            <Form.Control type="text" placeholder="Create a code to share this group" name="joincode" onChange={handleInputChange} value={groupFormData.joincode} required />
-            <Form.Control.Feedback type="invalid">A description join code is required!</Form.Control.Feedback>
-          </Form.Group>
-
-          <Button disabled={!(groupFormData.groupname && groupFormData.description)} type="submit" variant="success">
-            Create
-          </Button>
-        </Form>
+              <Button disabled={!(groupFormData.groupname && groupFormData.description)} type="submit" variant="success">
+                Create
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
       </Container>
     </>
   );
@@ -167,27 +170,35 @@ const UserGroupList = (props) => {
 
   return (
     <>
-      <Container>
-        <h2>{props.myGroups.length ? `My groups:` : "You do not have any groups"}</h2>
-        <Row>
-          {props.myGroups.map((group) => {
-            return (
-              <Col lg={3} key={group._id}>
-                <Card border="dark" style={{ marginBottom: "2rem" }}>
-                  <Card.Body className="d-grid gap-2">
-                    <Card.Title>{group.groupname}</Card.Title>
-                    <Card.Text>{group.description}</Card.Text>
-                    <Card.Text>join code: {group.joincode}</Card.Text>
-                    <Link to={`../GroupPage/${group._id}`}>Go To Group</Link>
-                    <Button className="btn-danger" onClick={() => handleDeleteUserGroup(group)}>
-                      Delete
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
+      <Container className="mt-4">
+        <Card>
+          <Card.Body>
+            <Card.Title>{props.myGroups.length ? `My groups:` : "You do not have any groups"}</Card.Title>
+            <Row>
+              {props.myGroups.map((group) => {
+                return (
+                  <Col lg={3} key={group._id}>
+                    <Card border="dark" style={{ marginBottom: "1rem", marginTop: "1rem" }}>
+                      <Card.Body className="d-grid gap-2">
+                        <Card.Title className="mx-auto">{group.groupname}</Card.Title>
+                        <Card.Text className="mx-auto">{group.description}</Card.Text>
+                        <Card.Text className="mx-auto">Join Code: {group.joincode}</Card.Text>
+                        <div className="mx-auto">
+                          <Button variant="outline-primary" className="mr-4" href={`../GroupPage/${group._id}`}>
+                            Go To Group
+                          </Button>
+                          <Button variant="outline-danger" onClick={() => handleDeleteUserGroup(group)}>
+                            Delete
+                          </Button>
+                        </div>
+                      </Card.Body>
+                    </Card>
+                  </Col>
+                );
+              })}
+            </Row>
+          </Card.Body>
+        </Card>
       </Container>
     </>
   );

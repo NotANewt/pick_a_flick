@@ -50,10 +50,10 @@ function Profile(props) {
   return (
     <>
       <Container>
+        <DealbreakerList />
+        <UserMovieList />
         <CreateGroupForm handleCreateGroup={handleProfileCreateGroup} />
         <UserGroupList myGroups={myGroups} handleDeleteGroup={handleProfileDeleteGroup} />
-        <UserMovieList />
-        <DealbreakerList />
       </Container>
     </>
   );
