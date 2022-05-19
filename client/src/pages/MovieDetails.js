@@ -181,16 +181,20 @@ function MovieDetails() {
             {/* if movie has one of the user's dealbreaker, show a div to notify user */}
             {foundDealbreaker === true && <div>This movie contains one of your dealbreakers.</div>}
             {/* if movie does not have one of the user's dealbraekers and the movie is not already save to the user, show the Save Movie button */}
-            {foundDealbreaker === false && hasMovie === false && <Button onClick={() => handleSaveMovie(searchedMovieDetails)}>Save Movie</Button>}
+            {foundDealbreaker === false && hasMovie === false && (
+              <Button variant="outline-success" onClick={() => handleSaveMovie(searchedMovieDetails)}>
+                Save Movie
+              </Button>
+            )}
             {/* if movie has already been saved to a user, show the Remove Movie button */}
             {hasMovie === true && (
-              <Button variant="danger" onClick={() => handleDeleteUserMovie(searchedMovieDetails)}>
+              <Button variant="outline-danger" onClick={() => handleDeleteUserMovie(searchedMovieDetails)}>
                 Remove Movie
               </Button>
             )}
 
             <br />
-            <Button href="/Movies" style={{ marginTop: "1rem" }}>
+            <Button variant="outline-primary" href="/Movies" style={{ marginTop: "1rem" }}>
               Back To Search
             </Button>
           </Col>

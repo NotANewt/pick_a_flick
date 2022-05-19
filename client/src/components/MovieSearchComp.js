@@ -121,8 +121,7 @@ const MovieSearch = () => {
                         {movie.posterImage ? <Card.Img src={movie.posterImage} alt={`The movie poster ${movie.title}`} variant="top" /> : null}
                         <Card.Body>
                           <Card.Title>{movie.title}</Card.Title>
-                          <p className="small">Release Year: {movie.year}</p>
-                          <p className="small">Genre: {movie.genre}</p>
+                          <Card.Text>Release Year: {movie.year}</Card.Text>
                           <Link className="btn btn-outline-primary" variant="outline-primary" to={`MovieDetails/${movie.dddId}`}>
                             View Movie Details
                           </Link>
