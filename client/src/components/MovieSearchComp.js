@@ -78,6 +78,10 @@ const MovieSearch = () => {
       // set state
       setSearchedMovies(movieData);
       setSearchInput("");
+
+      // remove hidden class
+      const movieSearchResultsDiv = document.getElementById("movieSearchResultsDiv");
+      movieSearchResultsDiv.classList.remove("hidden");
     } catch (err) {
       console.error(err);
     }
@@ -102,27 +106,35 @@ const MovieSearch = () => {
             </Form>
           </Card.Body>
         </Card>
-      </Container>
 
-      <Container>
         <div id="snackbar">No search results. Please try again.</div>
-        <Row>
-          {searchedMovies.map((movie) => {
-            return (
-              <Col lg="3" key={movie.dddId}>
-                <Card border="dark" style={{ marginBottom: "2rem" }}>
-                  {movie.posterImage ? <Card.Img src={movie.posterImage} alt={`The movie poster ${movie.title}`} variant="top" /> : null}
-                  <Card.Body>
-                    <Card.Title>{movie.title}</Card.Title>
-                    <p className="small">Release Year: {movie.year}</p>
-                    <p className="small">Genre: {movie.genre}</p>
-                    <Link to={`MovieDetails/${movie.dddId}`}>View Movie Details</Link>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
+        <div id="movieSearchResultsDiv" className="hidden">
+          <Card className="mt-4">
+            <Card.Body>
+              <Card.Title>{searchedMovies.length ? `Movies:` : "Search for a movie."}</Card.Title>
+
+              <Row>
+                {searchedMovies.map((movie) => {
+                  return (
+                    <Col lg={3} key={movie.dddId}>
+                      <Card border="dark" style={{ marginBottom: "2rem" }}>
+                        {movie.posterImage ? <Card.Img src={movie.posterImage} alt={`The movie poster ${movie.title}`} variant="top" /> : null}
+                        <Card.Body>
+                          <Card.Title>{movie.title}</Card.Title>
+                          <p className="small">Release Year: {movie.year}</p>
+                          <p className="small">Genre: {movie.genre}</p>
+                          <Link className="btn btn-outline-primary" variant="outline-primary" to={`MovieDetails/${movie.dddId}`}>
+                            View Movie Details
+                          </Link>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </Card.Body>
+          </Card>
+        </div>
       </Container>
     </>
   );
