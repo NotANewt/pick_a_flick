@@ -44,6 +44,7 @@ const LoginForm = () => {
         variables: { ...userFormData },
       });
       Auth.login(data.login.token);
+      location.assign("/Profile");
     } catch (e) {
       console.error(e);
     }
