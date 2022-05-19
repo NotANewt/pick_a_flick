@@ -56,10 +56,10 @@ const DealbreakerList = (props) => {
 
   return (
     <>
-      <Container>
+      <Container className="mt-4">
         <Card>
           <Card.Body>
-            <Card.Title>{userData.dealbreakers.length ? `Here are your dealbreakers.` : "You have no saved dealbreakers."}</Card.Title>
+            <Card.Title>{userData.dealbreakers.length ? `Your dealbreakers.` : "You have no saved dealbreakers."}</Card.Title>
             {userData.dealbreakers?.map((dealbreaker) => {
               return <Dealbreaker key={dealbreaker} dealbreaker={dealbreaker} />;
             })}
@@ -156,28 +156,28 @@ const Dealbreakers = () => {
   return (
     <>
       <div id="snackbar">That dealbreaker is already in your list.</div>
-      <hr />
-      <Form>
-        <Stack direction="horizontal" gap={3}>
-          <Form.Select id="mySelect">
-            {filteredDealbreakers.map((dealbreaker) => {
-              return (
-                <option key={dealbreaker._id} id={dealbreaker._id}>
-                  {dealbreaker.name}
-                </option>
-              );
-            })}
-          </Form.Select>
+      <Container>
+        <Form>
+          <Stack direction="horizontal" gap={3}>
+            <Form.Select id="mySelect">
+              {filteredDealbreakers.map((dealbreaker) => {
+                return (
+                  <option key={dealbreaker._id} id={dealbreaker._id}>
+                    {dealbreaker.name}
+                  </option>
+                );
+              })}
+            </Form.Select>
 
-          <Button variant="primary" onClick={() => handleButtonClick()}>
-            Save
-          </Button>
+            <Button variant="primary" onClick={() => handleButtonClick()}>
+              Save
+            </Button>
 
-          <Form.Control id="filter" placeholder="filter list" onChange={() => handleFilterDealbreakers()}></Form.Control>
-        </Stack>
-      </Form>
+            <Form.Control id="filter" placeholder="filter list" onChange={() => handleFilterDealbreakers()}></Form.Control>
+          </Stack>
+        </Form>
+      </Container>
 
-      <hr />
       <DealbreakerList />
     </>
   );

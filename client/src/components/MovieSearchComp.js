@@ -86,20 +86,22 @@ const MovieSearch = () => {
   return (
     <>
       <Container>
-        <hr />
-        <Form onSubmit={handleFormSubmit}>
-          <Row>
-            <Col xs={12} md={8}>
-              <Form.Control name="searchInput" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} type="text" size="lg" placeholder="Search for a movie" />
-            </Col>
-            <Col xs={12} md={4}>
-              <Button type="submit" variant="success" size="lg">
-                Submit Search
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-        <hr />
+        <Card>
+          <Card.Body>
+            <Form onSubmit={handleFormSubmit}>
+              <Row>
+                <Col xs={12} md={8}>
+                  <Form.Control name="searchInput" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} type="text" size="lg" placeholder="Search for a movie" />
+                </Col>
+                <Col xs={12} md={4}>
+                  <Button type="submit" variant="success" size="lg">
+                    Submit Search
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </Card.Body>
+        </Card>
       </Container>
 
       <Container>
