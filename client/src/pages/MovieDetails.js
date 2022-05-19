@@ -47,9 +47,11 @@ function MovieDetails() {
       };
 
       // TODO: remove this when not working on localhost
-      const corsAnywhere = `https://cors-anywhere.herokuapp.com/`;
+      // const corsAnywhere = `https://cors-anywhere.herokuapp.com/`;
 
-      const url = `${corsAnywhere}https://www.doesthedogdie.com/media/${dddId}`;
+      // const url = `${corsAnywhere}https://www.doesthedogdie.com/media/${dddId}`;
+
+      const url = `https://www.doesthedogdie.com/media/${dddId}`;
 
       await fetch(url, options)
         .then((response) => {
