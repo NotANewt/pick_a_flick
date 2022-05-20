@@ -52,7 +52,7 @@ const LoginForm = () => {
       password: "",
     });
 
-    navigate("/Profile", { replace: true });
+    navigate("/Profile");
   };
 
   return (
