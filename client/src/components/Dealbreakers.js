@@ -14,6 +14,7 @@ const Dealbreaker = (props) => {
 
   //handle user clicking button to delete a dealbreaker
   const handleDeleteUserDealbreaker = async (dealbreaker) => {
+    console.log("dealbreaker", dealbreaker);
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -25,6 +26,7 @@ const Dealbreaker = (props) => {
       const { data } = await removeUserDealbreaker({
         variables: { dealbreaker: dealbreaker },
       });
+      console.log("data", data);
     } catch (err) {
       console.error(err);
     }
@@ -82,7 +84,6 @@ const Dealbreakers = () => {
   const [filteredDealbreakers, setFilteredDealbreakers] = useState([]);
 
   // Query database to get all dealbreakers and populate into a dropdown
-
   const { loading, data } = useQuery(QUERY_DEALBREAKER, {
     onCompleted: (data) => {
       setFilteredDealbreakers(data.dealbreaker);

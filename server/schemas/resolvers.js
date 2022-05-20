@@ -55,6 +55,7 @@ const resolvers = {
     },
     removeUserDealbreaker: async (parent, { dealbreaker }, context) => {
       if (context.user) {
+        console.log("dealbreaker", dealbreaker);
         const updatedUser = await User.findOneAndUpdate(context.user._id, { $pull: { dealbreakers: dealbreaker } });
         return updatedUser;
       }
