@@ -42,7 +42,6 @@ const LoginForm = () => {
         variables: { ...userFormData },
       });
       Auth.login(data.login.token);
-      navigate("/Profile", { replace: true });
     } catch (e) {
       console.error(e);
     }
@@ -52,6 +51,8 @@ const LoginForm = () => {
       email: "",
       password: "",
     });
+
+    navigate("/Profile", { replace: true });
   };
 
   return (
