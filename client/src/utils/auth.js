@@ -37,6 +37,8 @@ class AuthService {
   login(idToken) {
     // Saves user token to localStorage
     localStorage.setItem("id_token", idToken);
+    // redirect to provile page
+    window.location.assign("/Profile");
   }
 
   logout() {

@@ -7,7 +7,7 @@ import { LOGIN_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 const LoginForm = () => {
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
 
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
   const [validated] = useState(false);
@@ -52,7 +52,7 @@ const LoginForm = () => {
       password: "",
     });
 
-    navigate("/Profile");
+    // navigate("/Profile");
   };
 
   return (
