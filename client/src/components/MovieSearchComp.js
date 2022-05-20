@@ -37,11 +37,11 @@ const MovieSearch = () => {
       };
 
       // TODO: remove this when not working on localhost
-      // const corsAnywhere = `https://cors-anywhere.herokuapp.com/`;
+      const corsAnywhere = `https://cors-anywhere.herokuapp.com/`;
 
-      // const url = `${corsAnywhere}https://www.doesthedogdie.com/dddsearch?q=${searchInput}`;
+      const url = `${corsAnywhere}https://www.doesthedogdie.com/dddsearch?q=${searchInput}`;
 
-      const url = `https://www.doesthedogdie.com/dddsearch?q=${searchInput}`;
+      // const url = `https://www.doesthedogdie.com/dddsearch?q=${searchInput}`;
 
       const response = await fetch(url, options);
       const { items } = await response.json();
