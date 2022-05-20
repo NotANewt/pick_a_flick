@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Alert, Card } from "react-bootstrap";
-import { Navigate } from "react-router-dom";
 
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
@@ -51,13 +50,6 @@ const LoginForm = () => {
       password: "",
     });
   };
-
-  // get token
-  const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-  if (token) {
-    return <Navigate to="/Profile" />;
-  }
 
   return (
     <>

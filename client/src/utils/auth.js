@@ -1,3 +1,5 @@
+import { Navigate } from "react-router-dom";
+
 // use this to decode a token and get the user's information out of it
 import decode from "jwt-decode";
 
@@ -35,7 +37,8 @@ class AuthService {
   login(idToken) {
     // Saves user token to localStorage
     localStorage.setItem("id_token", idToken);
-    // window.location.assign("/");
+    // send to Profile page
+    window.location.assign("/Profile");
   }
 
   logout() {
