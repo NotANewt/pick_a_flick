@@ -10,7 +10,7 @@ import { ADD_USER_TO_GROUP, REMOVE_MOVIE_FROM_GROUP, SAVE_USER_MOVIE_TO_GROUP } 
 
 function getDealbreakersFromGroupUsers(userDBData, groupUserIds) {
   let outputGroupDealbreakers = [];
-  // Loop through the users to find users who are in thius group and then grab their dealbreakers to output in a concat array
+  // Loop through the users to find users who are in this group and then grab their dealbreakers to output in a concat array
   if (userDBData.length > 0) {
     userDBData.forEach((u) => {
       if (groupUserIds?.includes(u._id)) {
@@ -56,6 +56,17 @@ function GroupPage() {
 
   let groupDealbreakers = getDealbreakersFromGroupUsers(usersDBData, groupDBData?.users);
 
+  // get group users usernames
+  let outputGroupUsers = [];
+
+  if (usersDBData.length > 0) {
+    usersDBData.forEach((u) => {
+      outputGroupUsers = outputGroupUsers.concat(u.username);
+    });
+  }
+  console.log("outputGroupUsers", outputGroupUsers);
+
+  // prevent default when user submits Join Group form, then call handleJoinGroup and send join code
   const handleJoinGroupForm = (e) => {
     e.preventDefault();
     const joinCode = document.getElementById("joincode").value;
@@ -193,6 +204,7 @@ function GroupPage() {
             <Card.Body>
               <Card.Title>Welcome to {groupDBData.groupname}</Card.Title>
               <Card.Text>{groupDBData.description}</Card.Text>
+              <Card.Text>Group members: {outputGroupUsers.join(", ")}</Card.Text>
             </Card.Body>
           </Card>
 
