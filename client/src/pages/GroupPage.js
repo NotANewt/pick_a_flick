@@ -21,6 +21,7 @@ function getDealbreakersFromGroupUsers(userDBData, groupUserIds) {
   return outputGroupDealbreakers;
 }
 
+// pick a random movie
 function pickAFlick(groupDBData) {
   return groupDBData.movies[Math.floor(Math.random() * groupDBData.movies.length)];
 }
@@ -40,19 +41,19 @@ function GroupPage() {
   const meDBData = dataMe?.me || [];
   if (!loadingMe) console.log("loaded me data");
 
-  // We got to get everybody right now - I'll fix this in post (TODO: query only users who belong to group)
+  // Currently quereying all users - will update to query user by id in the future
   const { loading: loadingUsers, data: dataUsers } = useQuery(QUERY_USER);
   const usersDBData = dataUsers?.user || [];
   if (!loadingUsers) console.log("loaded user data");
 
-  // query EVERY group (TODO lets just get the one group yeah?) once we fix this we wont need to filer our data below
+  // Currently quereying all groups - will update to query group by id in the future
   const { loading: loadingGroup, data: dataGroup, refetch } = useQuery(QUERY_GROUP);
   const groupTempData = dataGroup?.group.filter((group) => group._id.includes(paramsGroupId) == true) || [];
   //TEMP FIX
   const groupDBData = groupTempData[0];
 
   if (!loadingGroup) console.log("loaded group data");
-  // TODO: ask Scott how to query the database for users that are part of an array
+
   let groupDealbreakers = getDealbreakersFromGroupUsers(usersDBData, groupDBData?.users);
 
   const handleJoinGroupForm = (e) => {
@@ -77,7 +78,6 @@ function GroupPage() {
       } catch (err) {
         console.error(err);
       }
-      //TODO make the page load with a refetc
       refetch();
     } else {
       console.log("wrong join code");
@@ -94,7 +94,6 @@ function GroupPage() {
         movieData: movieData,
       },
     });
-    //TODO lets get this working
     refetch();
   };
 
@@ -151,7 +150,7 @@ function GroupPage() {
     });
   };
 
-  // PICKING OUR FINAL FLIC!
+  // PICKING OUR FINAL FLICK!
   const handlePickAFlick = () => {
     const pickedMovie = pickAFlick(groupDBData);
 
@@ -163,17 +162,51 @@ function GroupPage() {
     });
   };
 
+  // when user clicks the Save Group Link button, the value is saved to their clipboard
+  function handleCopyGroupLink() {
+    /* Get the text field */
+    const copyGroupLinkButton = document.getElementById("copyGroupLinkButton");
+
+    /* Copy the text inside the text field */
+    navigator.clipboard.writeText(copyGroupLinkButton.value);
+
+    // snackbar to notify user
+    const x = document.getElementById("snackbar");
+    // Add the "show" class to DIV
+    x.classList.add("show");
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function () {
+      x.className = x.className.replace("show", "");
+    }, 3000);
+
+    // remove the active class from the button
+    copyGroupLinkButton.classList.remove("btn-active");
+  }
+
   // If you are part of this group
   if (groupDBData?.users.includes(meDBData._id)) {
     return (
       <>
+        <div id="snackbar">Copied Group Link.</div>
         <Container>
-          <Card className="mb-4">
+          <Card>
             <Card.Body>
               <Card.Title>Welcome to {groupDBData.groupname}</Card.Title>
               <Card.Text>{groupDBData.description}</Card.Text>
             </Card.Body>
           </Card>
+
+          <Card className="my-4">
+            <Card.Body>
+              <Card.Title>Group Info</Card.Title>
+              <Card.Text>Send a friend the group link and join code for them to join in on the fun!</Card.Text>
+              <Button id="copyGroupLinkButton" className="mb-2" variant="outline-primary" onClick={() => handleCopyGroupLink()} value={window.location.href}>
+                Copy Group Link
+              </Button>
+              <Card.Text>Join Code: {groupDBData.joincode}</Card.Text>
+            </Card.Body>
+          </Card>
+
           <GroupMovieList movies={groupDBData.movies} handleRemoveMovie={handleRemoveMovieFromGroup} />
 
           <Card className="my-4">
