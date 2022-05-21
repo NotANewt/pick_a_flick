@@ -56,12 +56,14 @@ function GroupPage() {
 
   let groupDealbreakers = getDealbreakersFromGroupUsers(usersDBData, groupDBData?.users);
 
-  // get group users usernames
+  // get group users usernames to show on page
   let outputGroupUsers = [];
 
   if (usersDBData.length > 0) {
     usersDBData.forEach((u) => {
-      outputGroupUsers = outputGroupUsers.concat(u.username);
+      if (groupDBData?.users.includes(u._id)) {
+        outputGroupUsers = outputGroupUsers.concat(u.username);
+      }
     });
   }
   console.log("outputGroupUsers", outputGroupUsers);
