@@ -41,7 +41,7 @@ const MovieSearch = () => {
 
       // const url = `${corsAnywhere}https://www.doesthedogdie.com/dddsearch?q=${searchInput}`;
 
-      const url = `http://teamdavies.net/pickaflick/api.php?q=${searchInput}`;
+      const url = `https://notanewt.com/pickaflick/api.php?q=${searchInput}`;
 
       const response = await fetch(url);
       const { items } = await response.json();

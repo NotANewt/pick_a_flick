@@ -53,7 +53,7 @@ function MovieDetails() {
 
       // const url = `${corsAnywhere}https://www.doesthedogdie.com/media/${dddId}`;
 
-      const url = `http://teamdavies.net/pickaflick/api.php?media=${dddId}`;
+      const url = `https://notanewt.com/pickaflick/api.php?media=${dddId}`;
 
       await fetch(url)
         .then((response) => {
