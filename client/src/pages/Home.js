@@ -28,9 +28,9 @@ function Home(props) {
           <Card>
             <Card.Body>
               <Card.Text>Log in or sign up to get started.</Card.Text>
-              <Link as={Link} to="/LoginSignup">
+              <Button variant="outline-primary" href="/LoginSignup">
                 Login or Signup
-              </Link>
+              </Button>
             </Card.Body>
           </Card>
         )}
