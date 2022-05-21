@@ -196,15 +196,21 @@ function GroupPage() {
   } else {
     return (
       <>
-        <h2>Join Group Form</h2>
-        <Form onSubmit={handleJoinGroupForm}>
-          <Form.Group>
-            <Form.Control type="text" placeholder="join code" id="joincode"></Form.Control>
-            <Button variant="outline-success" type="submit">
-              Join Group
-            </Button>
-          </Form.Group>
-        </Form>
+        <Container>
+          <Card>
+            <Card.Body>
+              <Card.Title>Enter the Join Code below to access the group.</Card.Title>
+              <Form onSubmit={handleJoinGroupForm}>
+                <Form.Group>
+                  <Form.Control className="my-4" type="text" placeholder="join code" id="joincode"></Form.Control>
+                  <Button variant="outline-success" type="submit">
+                    Join Group
+                  </Button>
+                </Form.Group>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Container>
       </>
     );
   }
