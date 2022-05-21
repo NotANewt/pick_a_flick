@@ -19,7 +19,7 @@ function Home(props) {
                   Search for Dealbreakers to add them to your Profile
                 </Button>
                 <Button variant="outline-primary" href="/Movies">
-                  Search for Movies add them to your Profile
+                  Search for Movies to add them to your Profile
                 </Button>
               </div>
             </Card.Body>
