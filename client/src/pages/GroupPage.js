@@ -211,14 +211,17 @@ function GroupPage() {
 
           <Card className="my-4">
             <Card.Body className="mx-auto">
-              <div>
-                <Button variant="outline-danger" className="me-4" onClick={() => handleRemoveMoviesWithDealbreakers()}>
-                  Remove Movies with Dealbreakers
-                </Button>
-                <Button variant="outline-success" onClick={() => handlePickAFlick()}>
-                  Pick A Flick!
-                </Button>
-              </div>
+              <Button variant="outline-danger" onClick={() => handleRemoveMoviesWithDealbreakers()}>
+                Remove Movies with Dealbreakers
+              </Button>
+            </Card.Body>
+          </Card>
+
+          <Card className="my-4">
+            <Card.Body className="mx-auto">
+              <Button variant="outline-success" onClick={() => handlePickAFlick()}>
+                Pick A Flick!
+              </Button>
             </Card.Body>
           </Card>
 
