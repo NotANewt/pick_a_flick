@@ -36,24 +36,26 @@ function MovieDetails() {
   // api call from does the dog die to get movie media information, including dealbreakers
   const getDealbreakers = async () => {
     try {
-      const options = {
-        method: "GET",
-        crossDomain: true,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "X-API-KEY": process.env.REACT_APP_DDD_KEY,
-        },
-      };
+      // if using cors-anywhere
+      //
+      // const options = {
+      //   method: "GET",
+      //   crossDomain: true,
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //     "X-API-KEY": process.env.REACT_APP_DDD_KEY,
+      //   },
+      // };
 
-      // TODO: remove this when not working on localhost
-      const corsAnywhere = `https://cors-anywhere.herokuapp.com/`;
+      // // TODO: remove this when not working on localhost
+      // const corsAnywhere = `https://cors-anywhere.herokuapp.com/`;
 
-      const url = `${corsAnywhere}https://www.doesthedogdie.com/media/${dddId}`;
+      // const url = `${corsAnywhere}https://www.doesthedogdie.com/media/${dddId}`;
 
-      // const url = `https://www.doesthedogdie.com/media/${dddId}`;
+      const url = `http://teamdavies.net/pickaflick/api.php?media=${dddId}`;
 
-      await fetch(url, options)
+      await fetch(url)
         .then((response) => {
           return response.json();
         })

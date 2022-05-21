@@ -26,24 +26,24 @@ const MovieSearch = () => {
 
     // fetch from does the dog die
     try {
-      const options = {
-        method: "GET",
-        crossDomain: true,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "X-API-KEY": process.env.REACT_APP_DDD_KEY,
-        },
-      };
+      // if using cors anywhere
+      // const options = {
+      //   method: "GET",
+      //   crossDomain: true,
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //     "X-API-KEY": process.env.REACT_APP_DDD_KEY,
+      //   },
+      // };
 
-      // TODO: remove this when not working on localhost
-      const corsAnywhere = `https://cors-anywhere.herokuapp.com/`;
+      // const corsAnywhere = `https://cors-anywhere.herokuapp.com/`;
 
-      const url = `${corsAnywhere}https://www.doesthedogdie.com/dddsearch?q=${searchInput}`;
+      // const url = `${corsAnywhere}https://www.doesthedogdie.com/dddsearch?q=${searchInput}`;
 
-      // const url = `https://www.doesthedogdie.com/dddsearch?q=${searchInput}`;
+      const url = `http://teamdavies.net/pickaflick/api.php?q=${searchInput}`;
 
-      const response = await fetch(url, options);
+      const response = await fetch(url);
       const { items } = await response.json();
 
       // if the search returned no movies
